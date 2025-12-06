@@ -1,0 +1,23 @@
+{
+  "date": "2025-12-05",
+  "weight": 219.0,
+  "blood_pressure_systolic": null,
+  "blood_pressure_diastolic": null,
+  "glucose": null,
+  "steps": null,
+  "sleep_hours": null,
+  "water_glasses": 0,
+  "alcohol": true,
+  "alcohol_drinks": 2,
+  "alcohol_when": "today",
+  "exercise": "",
+  "supplements": [],
+  "stress_level": 5,
+  "notes": "",
+  "daily_exercises": [],
+  "coffee": false,
+  "oatmeal": false,
+  "carrots": 0,
+  "food_log": "",
+  "updated_at": "2025-12-06T13:14:58.646930"
+}

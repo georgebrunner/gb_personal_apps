@@ -1,0 +1,150 @@
+[
+  {
+    "id": "1",
+    "name": "Fire and Rain",
+    "artist": "James Taylor",
+    "difficulty": "Medium",
+    "status": "Want to Learn",
+    "progress": 0,
+    "notes": "Fingerpicking, chord transitions. Have tabs in OneDrive.",
+    "resource_path": "C:/Users/GeorgeBrunner/OneDrive/Guitar Resources/Fire and Rain.docx",
+    "added_at": "2025-12-06T10:00:00"
+  },
+  {
+    "id": "2",
+    "name": "You've Got a Friend",
+    "artist": "James Taylor",
+    "difficulty": "Medium",
+    "status": "Want to Learn",
+    "progress": 0,
+    "notes": "Open chords, strumming. Have tabs in OneDrive.",
+    "resource_path": "C:/Users/GeorgeBrunner/OneDrive/Guitar Resources/You've Got a Friend.docx",
+    "added_at": "2025-12-06T10:00:00"
+  },
+  {
+    "id": "3",
+    "name": "Sweet Baby James",
+    "artist": "James Taylor",
+    "difficulty": "Medium",
+    "status": "Want to Learn",
+    "progress": 0,
+    "notes": "Beautiful fingerpicking patterns",
+    "added_at": "2025-12-06T10:00:00"
+  },
+  {
+    "id": "4",
+    "name": "Time in a Bottle",
+    "artist": "Jim Croce",
+    "difficulty": "Medium",
+    "status": "Want to Learn",
+    "progress": 0,
+    "notes": "Fingerpicking, Am shapes. Have tabs in OneDrive.",
+    "resource_path": "C:/Users/GeorgeBrunner/OneDrive/Guitar Resources/Time in a Bottle.docx",
+    "added_at": "2025-12-06T10:00:00"
+  },
+  {
+    "id": "5",
+    "name": "Operator",
+    "artist": "Jim Croce",
+    "difficulty": "Medium",
+    "status": "Want to Learn",
+    "progress": 0,
+    "notes": "Strumming, storytelling song. Have tabs in OneDrive.",
+    "resource_path": "C:/Users/GeorgeBrunner/OneDrive/Guitar Resources/Operator.docx",
+    "added_at": "2025-12-06T10:00:00"
+  },
+  {
+    "id": "6",
+    "name": "Bad, Bad Leroy Brown",
+    "artist": "Jim Croce",
+    "difficulty": "Easy",
+    "status": "Want to Learn",
+    "progress": 0,
+    "notes": "Fun strumming pattern. Good beginner song. Have tabs in OneDrive.",
+    "resource_path": "C:/Users/GeorgeBrunner/OneDrive/Guitar Resources/Bad Bad Leroy Brown.docx",
+    "added_at": "2025-12-06T10:00:00"
+  },
+  {
+    "id": "7",
+    "name": "Horse with No Name",
+    "artist": "America",
+    "difficulty": "Easy",
+    "status": "Want to Learn",
+    "progress": 0,
+    "notes": "Only 2 chords! Great for beginners. Have tabs in OneDrive.",
+    "resource_path": "C:/Users/GeorgeBrunner/OneDrive/Guitar Resources/Horse with No Name.docx",
+    "added_at": "2025-12-06T10:00:00"
+  },
+  {
+    "id": "8",
+    "name": "Wonderful Tonight",
+    "artist": "Eric Clapton",
+    "difficulty": "Easy",
+    "status": "Want to Learn",
+    "progress": 0,
+    "notes": "Classic chord progression. Have tabs in OneDrive.",
+    "resource_path": "C:/Users/GeorgeBrunner/OneDrive/Guitar Resources/Wonderful Tonight.docx",
+    "added_at": "2025-12-06T10:00:00"
+  },
+  {
+    "id": "9",
+    "name": "Teach Your Children",
+    "artist": "Crosby, Stills, Nash & Young",
+    "difficulty": "Medium",
+    "status": "Want to Learn",
+    "progress": 0,
+    "notes": "Beautiful harmonies. Have tabs in OneDrive.",
+    "resource_path": "C:/Users/GeorgeBrunner/OneDrive/Guitar Resources/Teach Your Children.docx",
+    "added_at": "2025-12-06T10:00:00"
+  },
+  {
+    "id": "10",
+    "name": "Doctor My Eyes",
+    "artist": "Jackson Browne",
+    "difficulty": "Easy",
+    "status": "Want to Learn",
+    "progress": 0,
+    "notes": "Simple progression, good rhythm practice",
+    "added_at": "2025-12-06T10:00:00"
+  },
+  {
+    "id": "11",
+    "name": "Running on Empty",
+    "artist": "Jackson Browne",
+    "difficulty": "Medium",
+    "status": "Want to Learn",
+    "progress": 0,
+    "notes": "Driving rhythm, great road song",
+    "added_at": "2025-12-06T10:00:00"
+  },
+  {
+    "id": "12",
+    "name": "These Days",
+    "artist": "Jackson Browne",
+    "difficulty": "Medium",
+    "status": "Want to Learn",
+    "progress": 0,
+    "notes": "Beautiful fingerpicking",
+    "added_at": "2025-12-06T10:00:00"
+  },
+  {
+    "id": "13",
+    "name": "Sara Smile",
+    "artist": "Hall & Oates",
+    "difficulty": "Medium",
+    "status": "Want to Learn",
+    "progress": 0,
+    "notes": "Interesting chord voicings",
+    "added_at": "2025-12-06T10:00:00"
+  },
+  {
+    "id": "14",
+    "name": "She's Gone",
+    "artist": "Hall & Oates",
+    "difficulty": "Medium",
+    "status": "Want to Learn",
+    "progress": 0,
+    "notes": "Soul/R&B strumming style",
+    "added_at": "2025-12-06T10:00:00"
+  }
+]
