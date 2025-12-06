@@ -2,14 +2,6 @@ import { useState, useEffect } from 'react'
 import { saveDailyEntry, getDailyEntry, DailyEntry } from '../api'
 import VoiceInput from './VoiceInput'
 
-const SUPPLEMENTS = ['Multivitamin', 'Vitamin D', 'Fish Oil', 'Magnesium', 'B12']
-
-const DAILY_EXERCISES = [
-  { id: 'dumbbell_curls', label: 'Dumbbell curls (50 reps each arm)' },
-  { id: 'balance_left', label: 'Stand on left foot (100 count)' },
-  { id: 'balance_right', label: 'Stand on right foot (100 count)' }
-]
-
 const getDefaultEntry = (date: string): DailyEntry => ({
   date,
   weight: undefined,
@@ -80,24 +72,6 @@ export default function DailyEntryForm() {
 
   const handleChange = (field: keyof DailyEntry, value: unknown) => {
     setEntry(prev => ({ ...prev, [field]: value }))
-  }
-
-  const handleSupplementToggle = (supplement: string) => {
-    setEntry(prev => ({
-      ...prev,
-      supplements: prev.supplements?.includes(supplement)
-        ? prev.supplements.filter(s => s !== supplement)
-        : [...(prev.supplements || []), supplement]
-    }))
-  }
-
-  const handleExerciseToggle = (exerciseId: string) => {
-    setEntry(prev => ({
-      ...prev,
-      daily_exercises: prev.daily_exercises?.includes(exerciseId)
-        ? prev.daily_exercises.filter(e => e !== exerciseId)
-        : [...(prev.daily_exercises || []), exerciseId]
-    }))
   }
 
   const handleWaterClick = (glasses: number) => {
@@ -251,39 +225,6 @@ export default function DailyEntryForm() {
         </div>
 
         <div className="form-group">
-          <label>Daily Exercises</label>
-          <div className="checkbox-group">
-            {DAILY_EXERCISES.map(ex => (
-              <label key={ex.id} className="checkbox-item">
-                <input
-                  type="checkbox"
-                  checked={entry.daily_exercises?.includes(ex.id) || false}
-                  onChange={() => handleExerciseToggle(ex.id)}
-                />
-                {ex.label}
-              </label>
-            ))}
-          </div>
-        </div>
-
-        <div className="form-group">
-          <label id="exercise-label">Other Exercise Today</label>
-          <select
-            value={entry.exercise || ''}
-            onChange={e => handleChange('exercise', e.target.value)}
-            aria-labelledby="exercise-label"
-          >
-            <option value="">None</option>
-            <option value="Run">Run</option>
-            <option value="Walk">Walk</option>
-            <option value="Weights">Weights</option>
-            <option value="Bike">Bike</option>
-            <option value="Swim">Swim</option>
-            <option value="Other">Other</option>
-          </select>
-        </div>
-
-        <div className="form-group">
           <label>Alcohol?</label>
           <div className="checkbox-group">
             <label className="checkbox-item">
@@ -320,22 +261,6 @@ export default function DailyEntryForm() {
               </div>
             </div>
           )}
-        </div>
-
-        <div className="form-group">
-          <label>Supplements Taken</label>
-          <div className="checkbox-group">
-            {SUPPLEMENTS.map(supplement => (
-              <label key={supplement} className="checkbox-item">
-                <input
-                  type="checkbox"
-                  checked={entry.supplements?.includes(supplement) || false}
-                  onChange={() => handleSupplementToggle(supplement)}
-                />
-                {supplement}
-              </label>
-            ))}
-          </div>
         </div>
 
         <div className="form-group">

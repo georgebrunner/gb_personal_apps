@@ -1,5 +1,5 @@
 // Use dynamic API base for accessing from different devices
-const API_BASE = `http://${window.location.hostname}:8002`
+const API_BASE = `http://${window.location.hostname}:8003`
 
 export interface TodoItem {
   id?: string

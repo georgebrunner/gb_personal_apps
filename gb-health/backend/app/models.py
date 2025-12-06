@@ -15,7 +15,8 @@ class DailyEntry(BaseModel):
     alcohol: Optional[bool] = None
     alcohol_drinks: Optional[int] = None  # 1-8 drinks
     alcohol_when: Optional[str] = None  # "today" or "yesterday"
-    exercise: Optional[str] = None
+    exercise: Optional[str] = None  # Legacy single exercise
+    exercises: Optional[list[str]] = None  # New: multiple exercises per day
     supplements: Optional[list[str]] = None
     stress_level: Optional[int] = None  # 1-10
     notes: Optional[str] = None

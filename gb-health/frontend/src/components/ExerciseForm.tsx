@@ -1,5 +1,23 @@
-import { useState } from 'react'
-import { saveExerciseEntry, ExerciseEntry } from '../api'
+import { useState, useEffect } from 'react'
+import { saveExerciseEntry, ExerciseEntry, getDailyEntry, saveDailyEntry, DailyEntry } from '../api'
+
+const DAILY_EXERCISES = [
+  { id: 'dumbbell_curls', label: 'Dumbbell curls (50 reps each arm)' },
+  { id: 'balance', label: 'Stand on one foot (100 count each foot)' }
+]
+
+const OTHER_EXERCISES = [
+  'Walk',
+  'Run',
+  'Bike',
+  'Swim',
+  'Weights',
+  'Yoga',
+  'Gardening',
+  'Yardwork',
+  'Housework',
+  'Other'
+]
 
 export default function ExerciseForm() {
   const today = new Date().toISOString().split('T')[0]
@@ -12,11 +30,54 @@ export default function ExerciseForm() {
     notes: ''
   })
 
+  const [dailyExercises, setDailyExercises] = useState<string[]>([])
+  const [otherExercises, setOtherExercises] = useState<string[]>([])
   const [saving, setSaving] = useState(false)
   const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null)
 
+  // Load daily exercises from daily entry
+  useEffect(() => {
+    getDailyEntry(today).then(dailyEntry => {
+      if (dailyEntry) {
+        setDailyExercises(dailyEntry.daily_exercises || [])
+        // Support both old single exercise string and new array format
+        if (dailyEntry.exercises) {
+          setOtherExercises(dailyEntry.exercises)
+        } else if (dailyEntry.exercise) {
+          setOtherExercises([dailyEntry.exercise])
+        } else {
+          setOtherExercises([])
+        }
+      }
+    })
+  }, [today])
+
   const handleChange = (field: keyof ExerciseEntry, value: unknown) => {
     setEntry(prev => ({ ...prev, [field]: value }))
+  }
+
+  const handleDailyExerciseToggle = async (exerciseId: string) => {
+    const newExercises = dailyExercises.includes(exerciseId)
+      ? dailyExercises.filter(e => e !== exerciseId)
+      : [...dailyExercises, exerciseId]
+
+    setDailyExercises(newExercises)
+
+    // Save to daily entry
+    const dailyEntry = await getDailyEntry(today) || { date: today }
+    await saveDailyEntry({ ...dailyEntry, daily_exercises: newExercises })
+  }
+
+  const handleOtherExerciseToggle = async (exercise: string) => {
+    const newExercises = otherExercises.includes(exercise)
+      ? otherExercises.filter(e => e !== exercise)
+      : [...otherExercises, exercise]
+
+    setOtherExercises(newExercises)
+
+    // Save to daily entry
+    const dailyEntry = await getDailyEntry(today) || { date: today }
+    await saveDailyEntry({ ...dailyEntry, exercises: newExercises })
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -51,7 +112,41 @@ export default function ExerciseForm() {
       )}
 
       <div className="card">
-        <h2>Log Exercise</h2>
+        <h2>Daily Exercises</h2>
+        <div className="form-group">
+          <div className="checkbox-group">
+            {DAILY_EXERCISES.map(ex => (
+              <label key={ex.id} className="checkbox-item">
+                <input
+                  type="checkbox"
+                  checked={dailyExercises.includes(ex.id)}
+                  onChange={() => handleDailyExerciseToggle(ex.id)}
+                />
+                {ex.label}
+              </label>
+            ))}
+          </div>
+        </div>
+
+        <div className="form-group">
+          <label>Other Exercise Today (check all that apply)</label>
+          <div className="checkbox-group">
+            {OTHER_EXERCISES.map(exercise => (
+              <label key={exercise} className="checkbox-item">
+                <input
+                  type="checkbox"
+                  checked={otherExercises.includes(exercise)}
+                  onChange={() => handleOtherExerciseToggle(exercise)}
+                />
+                {exercise}
+              </label>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="card">
+        <h2>Log Workout</h2>
 
         <div className="form-group">
           <label>Date</label>
@@ -63,7 +158,7 @@ export default function ExerciseForm() {
         </div>
 
         <div className="form-group">
-          <label>Exercise Type</label>
+          <label>Workout Type</label>
           <select
             value={entry.exercise_type}
             onChange={e => handleChange('exercise_type', e.target.value)}

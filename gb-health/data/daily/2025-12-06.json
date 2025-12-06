@@ -7,8 +7,8 @@
   "steps": null,
   "sleep_hours": null,
   "water_glasses": 2,
-  "alcohol": true,
-  "alcohol_drinks": 2,
+  "alcohol": false,
+  "alcohol_drinks": null,
   "alcohol_when": "yesterday",
   "exercise": "Walk",
   "supplements": [],
@@ -17,11 +17,12 @@
   "daily_exercises": [
     "dumbbell_curls",
     "balance_left",
-    "balance_right"
+    "balance_right",
+    "balance"
   ],
-  "coffee": false,
+  "coffee": true,
   "oatmeal": false,
-  "carrots": 0,
-  "food_log": "",
-  "updated_at": "2025-12-06T13:14:07.478775"
+  "carrots": 2,
+  "food_log": "1/2 and egg rye sandwich with 1/2 an avocado, tomatoe \n",
+  "updated_at": "2025-12-06T15:20:18.624509"
 }

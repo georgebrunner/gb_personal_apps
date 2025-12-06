@@ -2,11 +2,19 @@ import { useState, useEffect } from 'react'
 import { TodoItem, fetchTodos, addTodo, toggleTodo, deleteTodo } from './api'
 import VoiceInput from './components/VoiceInput'
 
+const APP_LINKS = [
+  { name: 'Health', port: 5173 },
+  { name: 'Guitar', port: 5174 },
+  { name: 'Todo', port: 5175 },
+  { name: 'Finance', port: 5176 },
+]
+
 function App() {
   const [todos, setTodos] = useState<TodoItem[]>([])
   const [newTodoText, setNewTodoText] = useState('')
   const [filter, setFilter] = useState<'all' | 'active' | 'completed'>('all')
   const [loading, setLoading] = useState(true)
+  const currentPort = 5175
 
   useEffect(() => {
     loadTodos()
@@ -77,6 +85,17 @@ function App() {
 
   return (
     <div className="container">
+      <nav className="app-nav">
+        {APP_LINKS.map(app => (
+          <a
+            key={app.port}
+            href={`http://${window.location.hostname}:${app.port}`}
+            className={`app-link ${app.port === currentPort ? 'active' : ''}`}
+          >
+            {app.name}
+          </a>
+        ))}
+      </nav>
       <h1>GB Todo</h1>
 
       <div className="card">

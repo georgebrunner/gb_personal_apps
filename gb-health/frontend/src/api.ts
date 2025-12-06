@@ -13,7 +13,8 @@ export interface DailyEntry {
   alcohol?: boolean
   alcohol_drinks?: number  // 1-8 drinks
   alcohol_when?: string  // "today" or "yesterday"
-  exercise?: string
+  exercise?: string  // Legacy single exercise
+  exercises?: string[]  // New: multiple exercises per day
   supplements?: string[]
   stress_level?: number
   notes?: string

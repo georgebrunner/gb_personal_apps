@@ -8,7 +8,7 @@
   "sleep_hours": null,
   "water_glasses": 0,
   "alcohol": true,
-  "alcohol_drinks": 2,
+  "alcohol_drinks": 4,
   "alcohol_when": "today",
   "exercise": "",
   "supplements": [],
@@ -19,5 +19,5 @@
   "oatmeal": false,
   "carrots": 0,
   "food_log": "",
-  "updated_at": "2025-12-06T13:14:58.646930"
+  "updated_at": "2025-12-06T15:07:23.228844"
 }

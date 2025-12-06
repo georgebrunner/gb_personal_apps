@@ -5,11 +5,30 @@ import History from './components/History'
 
 type Tab = 'practice' | 'songs' | 'history'
 
+const APP_LINKS = [
+  { name: 'Health', port: 5173 },
+  { name: 'Guitar', port: 5174 },
+  { name: 'Todo', port: 5175 },
+  { name: 'Finance', port: 5176 },
+]
+
 function App() {
   const [activeTab, setActiveTab] = useState<Tab>('practice')
+  const currentPort = 5174
 
   return (
     <div className="container">
+      <nav className="app-nav">
+        {APP_LINKS.map(app => (
+          <a
+            key={app.port}
+            href={`http://${window.location.hostname}:${app.port}`}
+            className={`app-link ${app.port === currentPort ? 'active' : ''}`}
+          >
+            {app.name}
+          </a>
+        ))}
+      </nav>
       <h1>GB Guitar</h1>
 
       <div className="tabs">
