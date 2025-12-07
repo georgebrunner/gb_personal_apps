@@ -220,3 +220,42 @@ def save_daily_guitar_entry(entry: dict) -> dict:
         json.dump(entry_copy, f, indent=2)
 
     return entry_copy
+
+
+def get_days_since_last_tuning() -> dict:
+    """Get days since last tuning for each guitar."""
+    ensure_dirs()
+    today = date.today()
+
+    result = {
+        "acoustic": None,
+        "electric": None,
+        "bass": None
+    }
+
+    # Get all daily files sorted by date descending
+    files = sorted(DAILY_DIR.glob("*.json"), reverse=True)
+
+    for file in files:
+        date_str = file.stem
+        try:
+            file_date = datetime.strptime(date_str, "%Y-%m-%d").date()
+        except ValueError:
+            continue
+
+        with open(file, "r") as f:
+            entry = json.load(f)
+
+        # Check each guitar type
+        if result["acoustic"] is None and entry.get("tuned_acoustic"):
+            result["acoustic"] = (today - file_date).days
+        if result["electric"] is None and entry.get("tuned_electric"):
+            result["electric"] = (today - file_date).days
+        if result["bass"] is None and entry.get("tuned_bass"):
+            result["bass"] = (today - file_date).days
+
+        # If we found all, stop searching
+        if all(v is not None for v in result.values()):
+            break
+
+    return result

@@ -1,6 +1,13 @@
 // Use dynamic API base for accessing from different devices
 const API_BASE = `http://${window.location.hostname}:8003`
 
+export type ListType = 'todo' | 'shopping' | 'notes'
+
+export interface Store {
+  id: string
+  name: string
+}
+
 export interface TodoItem {
   id?: string
   text: string
@@ -8,12 +15,24 @@ export interface TodoItem {
   due_date?: string
   priority?: 'low' | 'medium' | 'high'
   category?: string
+  list_type?: ListType
+  store?: string
   created_at?: string
   updated_at?: string
 }
 
-export async function fetchTodos(): Promise<TodoItem[]> {
-  const response = await fetch(`${API_BASE}/todos`)
+export async function fetchStores(): Promise<Store[]> {
+  const response = await fetch(`${API_BASE}/stores`)
+  if (!response.ok) throw new Error('Failed to fetch stores')
+  return response.json()
+}
+
+export async function fetchTodos(listType?: ListType, store?: string): Promise<TodoItem[]> {
+  const params = new URLSearchParams()
+  if (listType) params.append('list_type', listType)
+  if (store) params.append('store', store)
+  const url = params.toString() ? `${API_BASE}/todos?${params}` : `${API_BASE}/todos`
+  const response = await fetch(url)
   if (!response.ok) throw new Error('Failed to fetch todos')
   return response.json()
 }

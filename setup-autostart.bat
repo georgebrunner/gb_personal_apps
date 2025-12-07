@@ -20,6 +20,7 @@ if exist "%SHORTCUT_PATH%" (
     echo   - GB Guitar  (http://localhost:5174)
     echo   - GB Todo    (http://localhost:5175)
     echo   - GB Finance (http://localhost:5176)
+    echo   - GB Food    (http://localhost:5177)
     echo.
     echo Shortcut created at:
     echo   %SHORTCUT_PATH%

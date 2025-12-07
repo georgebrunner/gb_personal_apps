@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { TodoItem, fetchTodos, addTodo, toggleTodo, deleteTodo } from './api'
+import { TodoItem, Store, fetchTodos, fetchStores, addTodo, toggleTodo, ListType } from './api'
 import VoiceInput from './components/VoiceInput'
 
 const APP_LINKS = [
@@ -7,22 +7,38 @@ const APP_LINKS = [
   { name: 'Guitar', port: 5174 },
   { name: 'Todo', port: 5175 },
   { name: 'Finance', port: 5176 },
+  { name: 'Food', port: 5177 },
+]
+
+const LIST_TYPES: { type: ListType; label: string; placeholder: string }[] = [
+  { type: 'todo', label: 'To Do', placeholder: 'What needs to be done?' },
+  { type: 'shopping', label: 'Shopping', placeholder: 'What do you need to buy?' },
+  { type: 'notes', label: 'Notes', placeholder: 'Add a note...' },
 ]
 
 function App() {
   const [todos, setTodos] = useState<TodoItem[]>([])
   const [newTodoText, setNewTodoText] = useState('')
   const [filter, setFilter] = useState<'all' | 'active' | 'completed'>('all')
+  const [listType, setListType] = useState<ListType>('todo')
+  const [stores, setStores] = useState<Store[]>([])
+  const [selectedStore, setSelectedStore] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
   const currentPort = 5175
 
   useEffect(() => {
-    loadTodos()
+    fetchStores().then(setStores).catch(console.error)
   }, [])
 
+  useEffect(() => {
+    loadTodos()
+  }, [listType, selectedStore])
+
   const loadTodos = async () => {
+    setLoading(true)
     try {
-      const data = await fetchTodos()
+      const storeFilter = listType === 'shopping' ? selectedStore || undefined : undefined
+      const data = await fetchTodos(listType, storeFilter)
       setTodos(data)
     } catch (error) {
       console.error('Failed to load todos:', error)
@@ -36,7 +52,12 @@ function App() {
     if (!newTodoText.trim()) return
 
     try {
-      const newTodo = await addTodo({ text: newTodoText.trim(), completed: false })
+      const newTodo = await addTodo({
+        text: newTodoText.trim(),
+        completed: false,
+        list_type: listType,
+        store: listType === 'shopping' ? selectedStore || undefined : undefined
+      })
       setTodos([newTodo, ...todos])
       setNewTodoText('')
     } catch (error) {
@@ -57,12 +78,10 @@ function App() {
     }
   }
 
-  const handleDelete = async (id: string) => {
-    try {
-      await deleteTodo(id)
-      setTodos(todos.filter(t => t.id !== id))
-    } catch (error) {
-      console.error('Failed to delete todo:', error)
+  const handleListTypeChange = (newType: ListType) => {
+    setListType(newType)
+    if (newType !== 'shopping') {
+      setSelectedStore(null)
     }
   }
 
@@ -73,11 +92,29 @@ function App() {
   })
 
   const activeCount = todos.filter(t => !t.completed).length
+  const currentListConfig = LIST_TYPES.find(lt => lt.type === listType)!
 
-  if (loading) {
+  const getStoreName = (storeId: string | null) => {
+    if (!storeId) return 'All Stores'
+    const store = stores.find(s => s.id === storeId)
+    return store ? store.name : storeId
+  }
+
+  if (loading && todos.length === 0) {
     return (
       <div className="container">
-        <h1>GB Todo</h1>
+        <nav className="app-nav">
+          {APP_LINKS.map(app => (
+            <a
+              key={app.port}
+              href={`http://${window.location.hostname}:${app.port}`}
+              className={`app-link ${app.port === currentPort ? 'active' : ''}`}
+            >
+              {app.name}
+            </a>
+          ))}
+        </nav>
+        <h1>GB Lists</h1>
         <p>Loading...</p>
       </div>
     )
@@ -96,7 +133,42 @@ function App() {
           </a>
         ))}
       </nav>
-      <h1>GB Todo</h1>
+      <h1>GB Lists</h1>
+
+      {/* List Type Tabs */}
+      <div className="tabs">
+        {LIST_TYPES.map(lt => (
+          <button
+            key={lt.type}
+            className={`tab ${listType === lt.type ? 'active' : ''}`}
+            onClick={() => handleListTypeChange(lt.type)}
+          >
+            {lt.label}
+          </button>
+        ))}
+      </div>
+
+      {/* Store Selector for Shopping */}
+      {listType === 'shopping' && (
+        <div className="store-selector">
+          <button
+            className={`store-btn ${selectedStore === null ? 'active' : ''}`}
+            onClick={() => setSelectedStore(null)}
+          >
+            All
+          </button>
+          {stores.map(store => (
+            <button
+              type="button"
+              key={store.id}
+              className={`store-btn ${selectedStore === store.id ? 'active' : ''}`}
+              onClick={() => setSelectedStore(store.id)}
+            >
+              {store.name}
+            </button>
+          ))}
+        </div>
+      )}
 
       <div className="card">
         <form onSubmit={handleAddTodo}>
@@ -104,21 +176,16 @@ function App() {
             <div className="input-with-voice">
               <input
                 type="text"
-                placeholder="What needs to be done?"
+                placeholder={selectedStore ? `Add to ${getStoreName(selectedStore)} list...` : currentListConfig.placeholder}
                 value={newTodoText}
                 onChange={e => setNewTodoText(e.target.value)}
               />
               <VoiceInput onResult={handleVoiceResult} />
             </div>
           </div>
-          <div className="button-row">
-            <button type="submit" disabled={!newTodoText.trim()}>
-              Add Task
-            </button>
-            <button type="submit" disabled={!newTodoText.trim()} className="save-btn">
-              Save
-            </button>
-          </div>
+          <button type="submit" disabled={!newTodoText.trim()}>
+            Add {currentListConfig.label === 'Notes' ? 'Note' : 'Item'}
+          </button>
         </form>
       </div>
 
@@ -139,16 +206,18 @@ function App() {
           className={`filter-btn ${filter === 'completed' ? 'active' : ''}`}
           onClick={() => setFilter('completed')}
         >
-          Completed ({todos.length - activeCount})
+          Done ({todos.length - activeCount})
         </button>
       </div>
 
       <div className="card">
         {filteredTodos.length === 0 ? (
           <p className="empty-message">
-            {filter === 'all' ? 'No tasks yet. Add one above!' :
-             filter === 'active' ? 'No active tasks!' :
-             'No completed tasks!'}
+            {filter === 'all'
+              ? selectedStore
+                ? `No items in ${getStoreName(selectedStore)} list yet. Add one above!`
+                : `No ${currentListConfig.label.toLowerCase()} items yet. Add one above!`
+              : filter === 'active' ? 'No active items!' : 'No completed items!'}
           </p>
         ) : (
           <ul className="todo-list">
@@ -162,13 +231,18 @@ function App() {
                   />
                   <span className="checkmark"></span>
                 </label>
-                <span className="todo-text">{todo.text}</span>
+                <div className="todo-content">
+                  <span className="todo-text">{todo.text}</span>
+                  {listType === 'shopping' && !selectedStore && todo.store && (
+                    <span className="todo-store">{getStoreName(todo.store)}</span>
+                  )}
+                </div>
                 <button
-                  className="delete-btn"
-                  onClick={() => handleDelete(todo.id!)}
-                  aria-label="Delete task"
+                  className="complete-btn"
+                  onClick={() => handleToggle(todo.id!)}
+                  aria-label={todo.completed ? "Mark as incomplete" : "Mark as complete"}
                 >
-                  X
+                  {todo.completed ? '↩' : '✓'}
                 </button>
               </li>
             ))}
@@ -178,7 +252,7 @@ function App() {
 
       {todos.length > 0 && (
         <div className="stats">
-          <span>{activeCount} task{activeCount !== 1 ? 's' : ''} remaining</span>
+          <span>{activeCount} item{activeCount !== 1 ? 's' : ''} remaining</span>
         </div>
       )}
     </div>

@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from datetime import datetime
 from typing import Optional
 
-from .models import TodoItem, TodoUpdate
+from .models import TodoItem, TodoUpdate, STORES
 from . import storage
 
 app = FastAPI(
@@ -27,15 +27,26 @@ def root():
     return {"message": "GB Todo API", "status": "running"}
 
 
+# Stores
+@app.get("/stores")
+def list_stores():
+    """List all available stores for shopping lists."""
+    return STORES
+
+
 # Todos
 @app.get("/todos")
-def list_todos(completed: Optional[bool] = None, category: Optional[str] = None):
+def list_todos(completed: Optional[bool] = None, category: Optional[str] = None, list_type: Optional[str] = None, store: Optional[str] = None):
     """List all todos, optionally filtered."""
     todos = storage.load_todos()
     if completed is not None:
         todos = [t for t in todos if t.get("completed") == completed]
     if category:
         todos = [t for t in todos if t.get("category") == category]
+    if list_type:
+        todos = [t for t in todos if t.get("list_type", "todo") == list_type]
+    if store:
+        todos = [t for t in todos if t.get("store") == store]
     return todos
 
 

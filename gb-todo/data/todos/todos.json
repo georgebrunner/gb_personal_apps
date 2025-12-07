@@ -1,0 +1,68 @@
+[
+  {
+    "id": "1f600396-ac62-4182-8f86-afd06ed11e10",
+    "text": "Cans of Tuna",
+    "completed": false,
+    "due_date": null,
+    "priority": null,
+    "category": null,
+    "list_type": "shopping",
+    "created_at": "2025-12-07T12:18:46.776332",
+    "updated_at": "2025-12-07T13:19:32.968713"
+  },
+  {
+    "id": "e770d56e-7b2b-4333-b869-a68816728509",
+    "text": "Clams for clam chowder",
+    "completed": false,
+    "due_date": null,
+    "priority": null,
+    "category": null,
+    "list_type": "shopping",
+    "created_at": "2025-12-07T12:19:03.754680",
+    "updated_at": "2025-12-07T12:19:03.755688"
+  },
+  {
+    "id": "ada05c2c-7b47-44a4-ab73-fff572c47bc4",
+    "text": "Clean up backyard",
+    "completed": false,
+    "due_date": null,
+    "priority": null,
+    "category": null,
+    "list_type": "todo",
+    "created_at": "2025-12-07T13:16:55.993921",
+    "updated_at": "2025-12-07T13:17:07.090902"
+  },
+  {
+    "id": "4650ea4a-ffb9-4829-8b9b-0ce9f064ed7d",
+    "text": "Sort through the paint, Throw out and put stuff that is good in the basement",
+    "completed": false,
+    "due_date": null,
+    "priority": null,
+    "category": null,
+    "list_type": "todo",
+    "created_at": "2025-12-07T13:19:18.277103",
+    "updated_at": "2025-12-07T13:19:18.277103"
+  },
+  {
+    "id": "ec453ba8-e744-42cb-a512-b9ac393d8194",
+    "text": "Salad stuff (Lettuce, tomatoes,",
+    "completed": false,
+    "due_date": null,
+    "priority": null,
+    "category": null,
+    "list_type": "shopping",
+    "created_at": "2025-12-07T13:26:31.076236",
+    "updated_at": "2025-12-07T13:26:31.076236"
+  },
+  {
+    "id": "147111f7-2660-430f-a966-ab3f14dea9d9",
+    "text": "Email Bill Souder about adding access panel",
+    "completed": false,
+    "due_date": null,
+    "priority": null,
+    "category": null,
+    "list_type": "todo",
+    "created_at": "2025-12-07T13:27:04.191317",
+    "updated_at": "2025-12-07T13:27:04.191317"
+  }
+]

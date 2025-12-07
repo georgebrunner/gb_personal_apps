@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { logPractice, getStats, Stats, PracticeSession, DailyGuitarEntry, getDailyGuitarEntry, saveDailyGuitarEntry } from '../api'
+import { logPractice, getStats, Stats, PracticeSession, DailyGuitarEntry, getDailyGuitarEntry, saveDailyGuitarEntry, getTuningStats, TuningStats } from '../api'
 
 const FOCUS_AREAS = ['Chords', 'Scales', 'Songs', 'Techniques', 'Theory', 'Other']
 
@@ -15,6 +15,7 @@ export default function PracticeForm() {
   const [selectedDate, setSelectedDate] = useState(today)
   const [dailyEntry, setDailyEntry] = useState<DailyGuitarEntry>(getDefaultDailyEntry(today))
   const [loading, setLoading] = useState(true)
+  const [tuningStats, setTuningStats] = useState<TuningStats | null>(null)
 
   const [session, setSession] = useState<PracticeSession>({
     date: today,
@@ -30,8 +31,13 @@ export default function PracticeForm() {
   const [savingDaily, setSavingDaily] = useState(false)
   const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null)
 
+  const loadTuningStats = () => {
+    getTuningStats().then(setTuningStats).catch(() => {})
+  }
+
   useEffect(() => {
     getStats().then(setStats).catch(() => {})
+    loadTuningStats()
   }, [])
 
   useEffect(() => {
@@ -75,6 +81,8 @@ export default function PracticeForm() {
     setSavingDaily(true)
     try {
       await saveDailyGuitarEntry(updated)
+      // Refresh tuning stats after saving
+      loadTuningStats()
     } catch (e) {
       console.error('Failed to save daily entry', e)
     } finally {
@@ -169,6 +177,27 @@ export default function PracticeForm() {
             </label>
           </div>
         </div>
+
+        {/* Days Since Last Tuning */}
+        {tuningStats && (
+          <div className="tuning-stats">
+            <label>Days Since Last Tuning</label>
+            <div className="tuning-stats-grid">
+              <div className={`tuning-stat ${tuningStats.acoustic === 0 ? 'tuned-today' : tuningStats.acoustic && tuningStats.acoustic > 7 ? 'needs-tuning' : ''}`}>
+                <span className="tuning-stat-days">{tuningStats.acoustic ?? '-'}</span>
+                <span className="tuning-stat-label">Acoustic</span>
+              </div>
+              <div className={`tuning-stat ${tuningStats.electric === 0 ? 'tuned-today' : tuningStats.electric && tuningStats.electric > 7 ? 'needs-tuning' : ''}`}>
+                <span className="tuning-stat-days">{tuningStats.electric ?? '-'}</span>
+                <span className="tuning-stat-label">Electric</span>
+              </div>
+              <div className={`tuning-stat ${tuningStats.bass === 0 ? 'tuned-today' : tuningStats.bass && tuningStats.bass > 7 ? 'needs-tuning' : ''}`}>
+                <span className="tuning-stat-days">{tuningStats.bass ?? '-'}</span>
+                <span className="tuning-stat-label">Bass</span>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Streak Display */}

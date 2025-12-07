@@ -486,3 +486,62 @@ button:disabled {
   font-size: 12px;
   color: #666;
 }
+
+/* Tuning stats */
+.tuning-stats {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #E5E7EB;
+}
+
+.tuning-stats label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: #555;
+  font-size: 14px;
+}
+
+.tuning-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.tuning-stat {
+  text-align: center;
+  padding: 12px 8px;
+  background: #F3F4F6;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.tuning-stat.tuned-today {
+  background: #D1FAE5;
+}
+
+.tuning-stat.needs-tuning {
+  background: #FEE2E2;
+}
+
+.tuning-stat-days {
+  display: block;
+  font-size: 24px;
+  font-weight: 700;
+  color: #2563EB;
+}
+
+.tuning-stat.tuned-today .tuning-stat-days {
+  color: #059669;
+}
+
+.tuning-stat.needs-tuning .tuning-stat-days {
+  color: #DC2626;
+}
+
+.tuning-stat-label {
+  display: block;
+  font-size: 11px;
+  color: #666;
+  margin-top: 4px;
+}

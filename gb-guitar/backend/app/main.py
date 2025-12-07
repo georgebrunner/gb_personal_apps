@@ -143,6 +143,12 @@ def save_daily_entry(entry: DailyGuitarEntry):
     return saved
 
 
+@app.get("/tuning-stats")
+def get_tuning_stats():
+    """Get days since last tuning for each guitar."""
+    return storage.get_days_since_last_tuning()
+
+
 # Health check
 @app.get("/health")
 def health_check():

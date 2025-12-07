@@ -146,3 +146,15 @@ export async function saveDailyGuitarEntry(entry: DailyGuitarEntry): Promise<Dai
   if (!response.ok) throw new Error('Failed to save entry')
   return response.json()
 }
+
+export interface TuningStats {
+  acoustic: number | null
+  electric: number | null
+  bass: number | null
+}
+
+export async function getTuningStats(): Promise<TuningStats> {
+  const response = await fetch(`${API_BASE}/tuning-stats`)
+  if (!response.ok) throw new Error('Failed to fetch tuning stats')
+  return response.json()
+}

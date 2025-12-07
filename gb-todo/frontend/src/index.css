@@ -197,18 +197,26 @@ button:disabled {
   font-size: 16px;
 }
 
-.delete-btn {
+.complete-btn {
   width: 32px;
   height: 32px;
   padding: 0;
-  background: #EF4444;
+  background: #10B981;
   border-radius: 6px;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: bold;
 }
 
-.delete-btn:hover {
-  background: #DC2626;
+.complete-btn:hover {
+  background: #059669;
+}
+
+.todo-item.completed .complete-btn {
+  background: #6B7280;
+}
+
+.todo-item.completed .complete-btn:hover {
+  background: #4B5563;
 }
 
 .empty-message {
@@ -292,4 +300,76 @@ button:disabled {
 
 .voice-done-btn:hover {
   background: #0F766E;
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.tab {
+  flex: 1;
+  padding: 12px;
+  background: #E5E7EB;
+  color: #374151;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.tab.active {
+  background: #0D9488;
+  color: white;
+}
+
+/* Store selector */
+.store-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.store-btn {
+  padding: 8px 14px;
+  background: #F3F4F6;
+  color: #374151;
+  border: 2px solid #E5E7EB;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  width: auto;
+}
+
+.store-btn:hover {
+  border-color: #0D9488;
+  background: #F0FDFA;
+}
+
+.store-btn.active {
+  background: #0D9488;
+  color: white;
+  border-color: #0D9488;
+}
+
+/* Todo content with store badge */
+.todo-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.todo-store {
+  font-size: 11px;
+  color: #6B7280;
+  background: #F3F4F6;
+  padding: 2px 8px;
+  border-radius: 10px;
+  width: fit-content;
 }
