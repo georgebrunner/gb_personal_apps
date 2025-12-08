@@ -260,6 +260,16 @@ export async function deleteFavorite(id: string): Promise<void> {
   if (!response.ok) throw new Error('Failed to delete favorite')
 }
 
+export async function updateFavorite(id: string, updates: Partial<FavoriteFood>): Promise<FavoriteFood> {
+  const response = await fetch(`${FOOD_API_BASE}/favorites/${id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(updates)
+  })
+  if (!response.ok) throw new Error('Failed to update favorite')
+  return response.json()
+}
+
 export async function useFavorite(id: string): Promise<FavoriteFood> {
   const response = await fetch(`${FOOD_API_BASE}/favorites/${id}/use`, {
     method: 'POST'

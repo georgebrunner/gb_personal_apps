@@ -3,7 +3,7 @@ import {
   FoodEntry, DailyFoodLog, Recipe, FavoriteFood, MealType,
   getDailyFoodLog, addFoodEntry, deleteFoodEntry,
   getRecipes, createRecipe, deleteRecipe,
-  getFavorites, createFavorite, deleteFavorite, useFavorite
+  getFavorites, createFavorite, deleteFavorite, updateFavorite, useFavorite
 } from '../api'
 
 const MEAL_TYPES: MealType[] = ['breakfast', 'lunch', 'dinner', 'snack']
@@ -38,6 +38,7 @@ function FoodLog() {
   const [newFavoriteName, setNewFavoriteName] = useState('')
   const [newFavoriteMealType, setNewFavoriteMealType] = useState<MealType>('snack')
   const [newFavoriteCalories, setNewFavoriteCalories] = useState('')
+  const [editingFavorite, setEditingFavorite] = useState<FavoriteFood | null>(null)
 
   useEffect(() => {
     loadData()
@@ -210,6 +211,42 @@ function FoodLog() {
     } catch (error) {
       console.error('Failed to delete favorite:', error)
     }
+  }
+
+  const handleEditFavorite = (fav: FavoriteFood) => {
+    setEditingFavorite(fav)
+    setNewFavoriteName(fav.name)
+    setNewFavoriteMealType(fav.default_meal_type)
+    setNewFavoriteCalories(fav.calories?.toString() || '')
+    setShowFavoriteForm(true)
+  }
+
+  const handleUpdateFavorite = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!editingFavorite || !newFavoriteName.trim()) return
+
+    try {
+      const updated = await updateFavorite(editingFavorite.id!, {
+        name: newFavoriteName.trim(),
+        default_meal_type: newFavoriteMealType,
+        calories: newFavoriteCalories ? parseInt(newFavoriteCalories) : undefined
+      })
+      setFavorites(favorites.map(f => f.id === editingFavorite.id ? updated : f))
+      setNewFavoriteName('')
+      setNewFavoriteCalories('')
+      setEditingFavorite(null)
+      setShowFavoriteForm(false)
+    } catch (error) {
+      console.error('Failed to update favorite:', error)
+    }
+  }
+
+  const handleCancelFavoriteForm = () => {
+    setShowFavoriteForm(false)
+    setEditingFavorite(null)
+    setNewFavoriteName('')
+    setNewFavoriteCalories('')
+    setNewFavoriteMealType('snack')
   }
 
   const totalCalories = dailyLog?.entries.reduce((sum, e) => sum + (e.calories || 0), 0) || 0
@@ -527,7 +564,8 @@ function FoodLog() {
 
           {showFavoriteForm && (
             <div className="card">
-              <form onSubmit={handleAddFavorite}>
+              <h3>{editingFavorite ? 'Edit Quick Pick' : 'Add Quick Pick'}</h3>
+              <form onSubmit={editingFavorite ? handleUpdateFavorite : handleAddFavorite}>
                 <div className="form-group">
                   <label>Food Name</label>
                   <input
@@ -561,8 +599,10 @@ function FoodLog() {
                   </div>
                 </div>
                 <div className="row">
-                  <button type="submit" disabled={!newFavoriteName.trim()}>Save</button>
-                  <button type="button" className="btn-secondary" onClick={() => setShowFavoriteForm(false)}>Cancel</button>
+                  <button type="submit" disabled={!newFavoriteName.trim()}>
+                    {editingFavorite ? 'Update' : 'Save'}
+                  </button>
+                  <button type="button" className="btn-secondary" onClick={handleCancelFavoriteForm}>Cancel</button>
                 </div>
               </form>
             </div>
@@ -579,12 +619,11 @@ function FoodLog() {
               <ul className="favorites-list">
                 {favorites.map(fav => (
                   <li key={fav.id} className="favorite-item">
-                    <div className="favorite-info">
+                    <div className="favorite-info" onClick={() => handleEditFavorite(fav)} style={{ cursor: 'pointer', flex: 1 }}>
                       <span className="favorite-name">{fav.name}</span>
                       <span className="favorite-meta">
                         {fav.default_meal_type}
                         {fav.calories && ` - ${fav.calories} cal`}
-                        {fav.use_count > 0 && ` (used ${fav.use_count}x)`}
                       </span>
                     </div>
                     <button
