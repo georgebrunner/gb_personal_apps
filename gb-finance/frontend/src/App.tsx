@@ -11,7 +11,7 @@ const APP_LINKS = [
   { name: 'Guitar', port: 5174 },
   { name: 'Todo', port: 5175 },
   { name: 'Finance', port: 5176 },
-  { name: 'Food', port: 5177 },
+  { name: 'Sales', port: 5178 },
 ]
 
 function App() {

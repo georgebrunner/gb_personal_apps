@@ -1,28 +1,19 @@
 import { useState, useEffect } from 'react'
 import {
   FoodEntry, DailyFoodLog, Recipe, FavoriteFood, MealType,
-  getDailyLog, addFoodEntry, deleteFoodEntry,
+  getDailyFoodLog, addFoodEntry, deleteFoodEntry,
   getRecipes, createRecipe, deleteRecipe,
   getFavorites, createFavorite, deleteFavorite, useFavorite
-} from './api'
-
-const APP_LINKS = [
-  { name: 'Health', port: 5173 },
-  { name: 'Guitar', port: 5174 },
-  { name: 'Todo', port: 5175 },
-  { name: 'Finance', port: 5176 },
-  { name: 'Food', port: 5177 },
-  { name: 'Sales', port: 5178 },
-]
+} from '../api'
 
 const MEAL_TYPES: MealType[] = ['breakfast', 'lunch', 'dinner', 'snack']
 
-type TabType = 'log' | 'recipes' | 'favorites'
+type FoodTab = 'log' | 'recipes' | 'favorites'
 
-function App() {
+function FoodLog() {
   const today = new Date().toISOString().split('T')[0]
   const [selectedDate, setSelectedDate] = useState(today)
-  const [activeTab, setActiveTab] = useState<TabType>('log')
+  const [activeTab, setActiveTab] = useState<FoodTab>('log')
   const [dailyLog, setDailyLog] = useState<DailyFoodLog | null>(null)
   const [recipes, setRecipes] = useState<Recipe[]>([])
   const [favorites, setFavorites] = useState<FavoriteFood[]>([])
@@ -48,8 +39,6 @@ function App() {
   const [newFavoriteMealType, setNewFavoriteMealType] = useState<MealType>('snack')
   const [newFavoriteCalories, setNewFavoriteCalories] = useState('')
 
-  const currentPort = 5177
-
   useEffect(() => {
     loadData()
   }, [selectedDate, activeTab])
@@ -58,7 +47,7 @@ function App() {
     setLoading(true)
     try {
       if (activeTab === 'log') {
-        const log = await getDailyLog(selectedDate)
+        const log = await getDailyFoodLog(selectedDate)
         setDailyLog(log)
       } else if (activeTab === 'recipes') {
         const r = await getRecipes()
@@ -230,56 +219,26 @@ function App() {
     return acc
   }, {} as Record<MealType, FoodEntry[]>)
 
-  if (loading && activeTab === 'log') {
-    return (
-      <div className="container">
-        <nav className="app-nav">
-          {APP_LINKS.map(app => (
-            <a
-              key={app.port}
-              href={`http://${window.location.hostname}:${app.port}`}
-              className={`app-link ${app.port === currentPort ? 'active' : ''}`}
-            >
-              {app.name}
-            </a>
-          ))}
-        </nav>
-        <h1>GB Food</h1>
-        <p>Loading...</p>
-      </div>
-    )
-  }
-
   return (
-    <div className="container">
-      <nav className="app-nav">
-        {APP_LINKS.map(app => (
-          <a
-            key={app.port}
-            href={`http://${window.location.hostname}:${app.port}`}
-            className={`app-link ${app.port === currentPort ? 'active' : ''}`}
-          >
-            {app.name}
-          </a>
-        ))}
-      </nav>
-      <h1>GB Food</h1>
-
-      {/* Tabs */}
-      <div className="tabs">
+    <>
+      {/* Sub-tabs for Food */}
+      <div className="tabs" style={{ marginBottom: '16px' }}>
         <button
+          type="button"
           className={`tab ${activeTab === 'log' ? 'active' : ''}`}
           onClick={() => setActiveTab('log')}
         >
-          Food Log
+          Log
         </button>
         <button
+          type="button"
           className={`tab ${activeTab === 'recipes' ? 'active' : ''}`}
           onClick={() => setActiveTab('recipes')}
         >
           Recipes
         </button>
         <button
+          type="button"
           className={`tab ${activeTab === 'favorites' ? 'active' : ''}`}
           onClick={() => setActiveTab('favorites')}
         >
@@ -325,6 +284,7 @@ function App() {
                 {favorites.slice(0, 6).map(fav => (
                   <button
                     key={fav.id}
+                    type="button"
                     className="quick-pick-btn"
                     onClick={() => handleQuickAdd(fav)}
                   >
@@ -338,7 +298,7 @@ function App() {
 
           {/* Add Food Button */}
           {!showAddForm && (
-            <button onClick={() => setShowAddForm(true)} style={{ marginBottom: '16px' }}>
+            <button type="button" onClick={() => setShowAddForm(true)} style={{ marginBottom: '16px' }}>
               + Add Food
             </button>
           )}
@@ -401,6 +361,7 @@ function App() {
                       <span className="food-meta">
                         {entry.calories && <span className="food-calories">{entry.calories} cal</span>}
                         <button
+                          type="button"
                           className="delete-btn"
                           onClick={() => handleDeleteEntry(entry.id!)}
                           aria-label="Delete"
@@ -427,7 +388,7 @@ function App() {
       {activeTab === 'recipes' && (
         <>
           {!showRecipeForm && (
-            <button onClick={() => setShowRecipeForm(true)} style={{ marginBottom: '16px' }}>
+            <button type="button" onClick={() => setShowRecipeForm(true)} style={{ marginBottom: '16px' }}>
               + Add Recipe
             </button>
           )}
@@ -559,7 +520,7 @@ function App() {
       {activeTab === 'favorites' && (
         <>
           {!showFavoriteForm && (
-            <button onClick={() => setShowFavoriteForm(true)} style={{ marginBottom: '16px' }}>
+            <button type="button" onClick={() => setShowFavoriteForm(true)} style={{ marginBottom: '16px' }}>
               + Add Quick Pick Item
             </button>
           )}
@@ -627,6 +588,7 @@ function App() {
                       </span>
                     </div>
                     <button
+                      type="button"
                       className="delete-btn"
                       onClick={() => handleDeleteFavorite(fav.id!)}
                       aria-label="Delete"
@@ -640,8 +602,8 @@ function App() {
           )}
         </>
       )}
-    </div>
+    </>
   )
 }
 
-export default App
+export default FoodLog

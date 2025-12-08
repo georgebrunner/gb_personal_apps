@@ -2,16 +2,16 @@ import { useState } from 'react'
 import DailyEntryForm from './components/DailyEntryForm'
 import ExerciseForm from './components/ExerciseForm'
 import EntryList from './components/EntryList'
-import TodoListView from './components/TodoListView'
+import FoodLog from './components/FoodLog'
 
-type Tab = 'daily' | 'todo' | 'exercise' | 'goals'
+type Tab = 'daily' | 'food' | 'exercise' | 'goals'
 
 const APP_LINKS = [
   { name: 'Health', port: 5173 },
   { name: 'Guitar', port: 5174 },
   { name: 'Todo', port: 5175 },
   { name: 'Finance', port: 5176 },
-  { name: 'Food', port: 5177 },
+  { name: 'Sales', port: 5178 },
 ]
 
 function App() {
@@ -41,10 +41,10 @@ function App() {
           Daily
         </button>
         <button
-          className={`tab ${activeTab === 'todo' ? 'active' : ''}`}
-          onClick={() => setActiveTab('todo')}
+          className={`tab ${activeTab === 'food' ? 'active' : ''}`}
+          onClick={() => setActiveTab('food')}
         >
-          To Do
+          Food
         </button>
         <button
           className={`tab ${activeTab === 'exercise' ? 'active' : ''}`}
@@ -61,7 +61,7 @@ function App() {
       </div>
 
       {activeTab === 'daily' && <DailyEntryForm />}
-      {activeTab === 'todo' && <TodoListView />}
+      {activeTab === 'food' && <FoodLog />}
       {activeTab === 'exercise' && <ExerciseForm />}
       {activeTab === 'goals' && <EntryList />}
     </div>

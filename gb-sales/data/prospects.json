@@ -1,0 +1,82 @@
+[
+  {
+    "id": "1",
+    "name": "HSC",
+    "checklist": [
+      {"item": "initial_meeting", "completed": false, "completed_at": null, "notes": null},
+      {"item": "nda", "completed": false, "completed_at": null, "notes": null},
+      {"item": "data_intake_proposal", "completed": false, "completed_at": null, "notes": null},
+      {"item": "pitch_deck", "completed": false, "completed_at": null, "notes": null},
+      {"item": "closing_meeting", "completed": false, "completed_at": null, "notes": null},
+      {"item": "budget", "completed": false, "completed_at": null, "notes": null},
+      {"item": "authority", "completed": false, "completed_at": null, "notes": null},
+      {"item": "need", "completed": false, "completed_at": null, "notes": null},
+      {"item": "timeline", "completed": false, "completed_at": null, "notes": null},
+      {"item": "prove_roi", "completed": false, "completed_at": null, "notes": null}
+    ],
+    "status": "active",
+    "notes": null,
+    "created_at": "2025-12-08T12:00:00.000000",
+    "updated_at": "2025-12-08T12:00:00.000000"
+  },
+  {
+    "id": "2",
+    "name": "RyCon",
+    "checklist": [
+      {"item": "initial_meeting", "completed": false, "completed_at": null, "notes": null},
+      {"item": "nda", "completed": false, "completed_at": null, "notes": null},
+      {"item": "data_intake_proposal", "completed": false, "completed_at": null, "notes": null},
+      {"item": "pitch_deck", "completed": false, "completed_at": null, "notes": null},
+      {"item": "closing_meeting", "completed": false, "completed_at": null, "notes": null},
+      {"item": "budget", "completed": false, "completed_at": null, "notes": null},
+      {"item": "authority", "completed": false, "completed_at": null, "notes": null},
+      {"item": "need", "completed": false, "completed_at": null, "notes": null},
+      {"item": "timeline", "completed": false, "completed_at": null, "notes": null},
+      {"item": "prove_roi", "completed": false, "completed_at": null, "notes": null}
+    ],
+    "status": "active",
+    "notes": null,
+    "created_at": "2025-12-08T12:00:00.000000",
+    "updated_at": "2025-12-08T12:00:00.000000"
+  },
+  {
+    "id": "3",
+    "name": "Wistar",
+    "checklist": [
+      {"item": "initial_meeting", "completed": false, "completed_at": null, "notes": null},
+      {"item": "nda", "completed": false, "completed_at": null, "notes": null},
+      {"item": "data_intake_proposal", "completed": false, "completed_at": null, "notes": null},
+      {"item": "pitch_deck", "completed": false, "completed_at": null, "notes": null},
+      {"item": "closing_meeting", "completed": false, "completed_at": null, "notes": null},
+      {"item": "budget", "completed": false, "completed_at": null, "notes": null},
+      {"item": "authority", "completed": false, "completed_at": null, "notes": null},
+      {"item": "need", "completed": false, "completed_at": null, "notes": null},
+      {"item": "timeline", "completed": false, "completed_at": null, "notes": null},
+      {"item": "prove_roi", "completed": false, "completed_at": null, "notes": null}
+    ],
+    "status": "active",
+    "notes": null,
+    "created_at": "2025-12-08T12:00:00.000000",
+    "updated_at": "2025-12-08T12:00:00.000000"
+  },
+  {
+    "id": "4",
+    "name": "Mayo Ventures",
+    "checklist": [
+      {"item": "initial_meeting", "completed": false, "completed_at": null, "notes": null},
+      {"item": "nda", "completed": false, "completed_at": null, "notes": null},
+      {"item": "data_intake_proposal", "completed": false, "completed_at": null, "notes": null},
+      {"item": "pitch_deck", "completed": false, "completed_at": null, "notes": null},
+      {"item": "closing_meeting", "completed": false, "completed_at": null, "notes": null},
+      {"item": "budget", "completed": false, "completed_at": null, "notes": null},
+      {"item": "authority", "completed": false, "completed_at": null, "notes": null},
+      {"item": "need", "completed": false, "completed_at": null, "notes": null},
+      {"item": "timeline", "completed": false, "completed_at": null, "notes": null},
+      {"item": "prove_roi", "completed": false, "completed_at": null, "notes": null}
+    ],
+    "status": "active",
+    "notes": null,
+    "created_at": "2025-12-08T12:00:00.000000",
+    "updated_at": "2025-12-08T12:00:00.000000"
+  }
+]

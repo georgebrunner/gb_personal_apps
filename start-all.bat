@@ -19,7 +19,7 @@ echo   GB Health:  http://%IP%:5173
 echo   GB Guitar:  http://%IP%:5174
 echo   GB Todo:    http://%IP%:5175
 echo   GB Finance: http://%IP%:5176
-echo   GB Food:    http://%IP%:5177
+echo   GB Sales:   http://%IP%:5178
 echo.
 echo =============================================
 echo.
@@ -44,6 +44,10 @@ start /min "GB Todo Backend" cmd /c "cd /d %~dp0gb-todo\backend && pip install -
 echo Starting GB Food Backend on port 8004...
 start /min "GB Food Backend" cmd /c "cd /d %~dp0gb-food\backend && pip install -r requirements.txt -q && uvicorn app.main:app --host 0.0.0.0 --port 8004"
 
+:: Start GB Sales Backend
+echo Starting GB Sales Backend on port 8005...
+start /min "GB Sales Backend" cmd /c "cd /d %~dp0gb-sales\backend && pip install -r requirements.txt -q && uvicorn app.main:app --host 0.0.0.0 --port 8005"
+
 :: Wait for backends
 timeout /t 4 /nobreak > nul
 
@@ -63,9 +67,9 @@ start /min "GB Todo Frontend" cmd /c "cd /d %~dp0gb-todo\frontend && npm install
 echo Starting GB Finance Frontend on port 5176...
 start /min "GB Finance Frontend" cmd /c "cd /d %~dp0gb-finance\frontend && npm install --silent && npm run dev -- --port 5176"
 
-:: Start GB Food Frontend
-echo Starting GB Food Frontend on port 5177...
-start /min "GB Food Frontend" cmd /c "cd /d %~dp0gb-food\frontend && npm install --silent && npm run dev -- --port 5177"
+:: Start GB Sales Frontend
+echo Starting GB Sales Frontend on port 5178...
+start /min "GB Sales Frontend" cmd /c "cd /d %~dp0gb-sales\frontend && npm install --silent && npm run dev -- --port 5178"
 
 echo.
 echo =============================================
@@ -75,13 +79,15 @@ echo   GB Health:  http://localhost:5173
 echo   GB Guitar:  http://localhost:5174
 echo   GB Todo:    http://localhost:5175
 echo   GB Finance: http://localhost:5176
-echo   GB Food:    http://localhost:5177
+echo   GB Sales:   http://localhost:5178
 echo.
 echo   API Docs (Health):  http://localhost:8000/docs
 echo   API Docs (Guitar):  http://localhost:8001/docs
 echo   API Docs (Finance): http://localhost:8002/docs
 echo   API Docs (Todo):    http://localhost:8003/docs
 echo   API Docs (Food):    http://localhost:8004/docs
+echo   API Docs (Sales):   http://localhost:8005/docs
 echo =============================================
 echo.
-pause
+:: Only pause if running interactively (not from VBS)
+if "%1"=="" pause
