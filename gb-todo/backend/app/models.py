@@ -31,4 +31,5 @@ STORES = [
     {"id": "walmart", "name": "Walmart"},
     {"id": "wegmans", "name": "Wegman's"},
     {"id": "trader_joes", "name": "Trader Joe's"},
+    {"id": "redners", "name": "Redner's"},
 ]

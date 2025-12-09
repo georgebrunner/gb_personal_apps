@@ -24,6 +24,7 @@ function App() {
   const [stores, setStores] = useState<Store[]>([])
   const [selectedStore, setSelectedStore] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
+  const [hideCompleted, setHideCompleted] = useState(false)
   const currentPort = 5175
 
   useEffect(() => {
@@ -86,6 +87,7 @@ function App() {
   }
 
   const filteredTodos = todos.filter(todo => {
+    if (hideCompleted && todo.completed) return false
     if (filter === 'active') return !todo.completed
     if (filter === 'completed') return todo.completed
     return true
@@ -253,6 +255,14 @@ function App() {
       {todos.length > 0 && (
         <div className="stats">
           <span>{activeCount} item{activeCount !== 1 ? 's' : ''} remaining</span>
+          <label className="toggle-label">
+            <input
+              type="checkbox"
+              checked={hideCompleted}
+              onChange={(e) => setHideCompleted(e.target.checked)}
+            />
+            Hide completed
+          </label>
         </div>
       )}
     </div>
