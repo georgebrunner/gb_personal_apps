@@ -873,3 +873,82 @@ button:disabled {
   object-fit: cover;
   border-radius: 8px;
 }
+
+/* Custom exercise styles */
+.checkbox-item-with-delete {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.delete-exercise-btn {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: none;
+  background: #FEE2E2;
+  color: #EF4444;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-left: 8px;
+}
+
+.delete-exercise-btn:hover {
+  background: #EF4444;
+  color: white;
+}
+
+.add-exercise-btn {
+  background: #EEF2FF;
+  color: #4338CA;
+  border: 2px dashed #C7D2FE;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 12px;
+}
+
+.add-exercise-btn:hover {
+  background: #E0E7FF;
+  border-color: #A5B4FC;
+}
+
+.add-exercise-form {
+  margin-top: 12px;
+  padding: 12px;
+  background: #F9FAFB;
+  border-radius: 8px;
+}
+
+.add-exercise-form input {
+  margin-bottom: 8px;
+}
+
+.add-exercise-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.add-exercise-buttons button {
+  flex: 1;
+  padding: 10px;
+  font-size: 14px;
+}
+
+.add-exercise-buttons .cancel-btn {
+  background: #E5E7EB;
+  color: #374151;
+}
+
+.add-exercise-buttons .cancel-btn:hover {
+  background: #D1D5DB;
+}

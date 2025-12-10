@@ -10,6 +10,7 @@ DAILY_DIR = DATA_DIR / "daily"
 EXERCISES_DIR = DATA_DIR / "exercises"
 WEEKLY_DIR = DATA_DIR / "weekly"
 TODOS_DIR = DATA_DIR / "todos"
+SETTINGS_FILE = DATA_DIR / "settings.json"
 
 
 def ensure_dirs():
@@ -214,3 +215,44 @@ def delete_todo_item(d: date, item_id: str) -> Optional[dict]:
         json.dump(todo_list, f, indent=2)
 
     return todo_list
+
+
+# Settings functions (for custom exercises, etc.)
+def get_settings() -> dict:
+    """Get settings including custom exercises."""
+    ensure_dirs()
+    if SETTINGS_FILE.exists():
+        with open(SETTINGS_FILE, "r") as f:
+            return json.load(f)
+    return {
+        "custom_daily_exercises": [],
+        "custom_other_exercises": []
+    }
+
+
+def save_settings(settings: dict) -> dict:
+    """Save settings."""
+    ensure_dirs()
+    settings["updated_at"] = datetime.now().isoformat()
+    with open(SETTINGS_FILE, "w") as f:
+        json.dump(settings, f, indent=2)
+    return settings
+
+
+def add_custom_exercise(exercise_type: str, exercise: dict) -> dict:
+    """Add a custom exercise. exercise_type is 'daily' or 'other'."""
+    settings = get_settings()
+    key = f"custom_{exercise_type}_exercises"
+    if key not in settings:
+        settings[key] = []
+    settings[key].append(exercise)
+    return save_settings(settings)
+
+
+def remove_custom_exercise(exercise_type: str, exercise_id: str) -> dict:
+    """Remove a custom exercise by id."""
+    settings = get_settings()
+    key = f"custom_{exercise_type}_exercises"
+    if key in settings:
+        settings[key] = [e for e in settings[key] if e.get("id") != exercise_id]
+    return save_settings(settings)

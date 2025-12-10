@@ -169,6 +169,29 @@ def delete_todo_item(date_str: str, item_id: str):
     return {"deleted": True}
 
 
+# Settings / Custom exercises
+@app.get("/settings")
+def get_settings():
+    """Get app settings including custom exercises."""
+    return storage.get_settings()
+
+
+@app.post("/settings/exercises/{exercise_type}")
+def add_custom_exercise(exercise_type: str, exercise: dict):
+    """Add a custom exercise. exercise_type is 'daily' or 'other'."""
+    if exercise_type not in ["daily", "other"]:
+        raise HTTPException(status_code=400, detail="exercise_type must be 'daily' or 'other'")
+    return storage.add_custom_exercise(exercise_type, exercise)
+
+
+@app.delete("/settings/exercises/{exercise_type}/{exercise_id}")
+def remove_custom_exercise(exercise_type: str, exercise_id: str):
+    """Remove a custom exercise."""
+    if exercise_type not in ["daily", "other"]:
+        raise HTTPException(status_code=400, detail="exercise_type must be 'daily' or 'other'")
+    return storage.remove_custom_exercise(exercise_type, exercise_id)
+
+
 # Health check
 @app.get("/health")
 def health_check():

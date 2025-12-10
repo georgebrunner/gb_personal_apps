@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react'
-import { saveExerciseEntry, ExerciseEntry, getDailyEntry, saveDailyEntry, DailyEntry } from '../api'
+import { saveExerciseEntry, ExerciseEntry, getDailyEntry, saveDailyEntry, getSettings, addCustomExercise, removeCustomExercise, CustomExercise } from '../api'
 
-const DAILY_EXERCISES = [
+const DEFAULT_DAILY_EXERCISES = [
   { id: 'dumbbell_curls', label: 'Dumbbell curls (50 reps each arm)' },
   { id: 'balance', label: 'Stand on one foot (100 count each foot)' }
 ]
 
-const OTHER_EXERCISES = [
+const DEFAULT_OTHER_EXERCISES = [
   'Walk',
   'Run',
   'Bike',
@@ -32,11 +32,21 @@ export default function ExerciseForm() {
 
   const [dailyExercises, setDailyExercises] = useState<string[]>([])
   const [otherExercises, setOtherExercises] = useState<string[]>([])
+  const [customDailyExercises, setCustomDailyExercises] = useState<CustomExercise[]>([])
+  const [customOtherExercises, setCustomOtherExercises] = useState<CustomExercise[]>([])
   const [saving, setSaving] = useState(false)
   const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null)
+  const [showAddDaily, setShowAddDaily] = useState(false)
+  const [showAddOther, setShowAddOther] = useState(false)
+  const [newExerciseLabel, setNewExerciseLabel] = useState('')
 
-  // Load daily exercises from daily entry
+  // Load settings and daily exercises
   useEffect(() => {
+    getSettings().then(settings => {
+      setCustomDailyExercises(settings.custom_daily_exercises || [])
+      setCustomOtherExercises(settings.custom_other_exercises || [])
+    }).catch(console.error)
+
     getDailyEntry(today).then(dailyEntry => {
       if (dailyEntry) {
         setDailyExercises(dailyEntry.daily_exercises || [])
@@ -51,6 +61,10 @@ export default function ExerciseForm() {
       }
     })
   }, [today])
+
+  // Combined exercise lists
+  const allDailyExercises = [...DEFAULT_DAILY_EXERCISES, ...customDailyExercises]
+  const allOtherExercises = [...DEFAULT_OTHER_EXERCISES, ...customOtherExercises.map(e => e.label)]
 
   const handleChange = (field: keyof ExerciseEntry, value: unknown) => {
     setEntry(prev => ({ ...prev, [field]: value }))
@@ -78,6 +92,40 @@ export default function ExerciseForm() {
     // Save to daily entry
     const dailyEntry = await getDailyEntry(today) || { date: today }
     await saveDailyEntry({ ...dailyEntry, exercises: newExercises })
+  }
+
+  const handleAddCustomExercise = async (type: 'daily' | 'other') => {
+    if (!newExerciseLabel.trim()) return
+
+    const id = newExerciseLabel.toLowerCase().replace(/[^a-z0-9]+/g, '_')
+    const exercise: CustomExercise = { id, label: newExerciseLabel.trim() }
+
+    try {
+      const settings = await addCustomExercise(type, exercise)
+      if (type === 'daily') {
+        setCustomDailyExercises(settings.custom_daily_exercises || [])
+        setShowAddDaily(false)
+      } else {
+        setCustomOtherExercises(settings.custom_other_exercises || [])
+        setShowAddOther(false)
+      }
+      setNewExerciseLabel('')
+    } catch (err) {
+      console.error('Failed to add exercise:', err)
+    }
+  }
+
+  const handleRemoveCustomExercise = async (type: 'daily' | 'other', exerciseId: string) => {
+    try {
+      const settings = await removeCustomExercise(type, exerciseId)
+      if (type === 'daily') {
+        setCustomDailyExercises(settings.custom_daily_exercises || [])
+      } else {
+        setCustomOtherExercises(settings.custom_other_exercises || [])
+      }
+    } catch (err) {
+      console.error('Failed to remove exercise:', err)
+    }
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -115,33 +163,98 @@ export default function ExerciseForm() {
         <h2>Daily Exercises</h2>
         <div className="form-group">
           <div className="checkbox-group">
-            {DAILY_EXERCISES.map(ex => (
-              <label key={ex.id} className="checkbox-item">
-                <input
-                  type="checkbox"
-                  checked={dailyExercises.includes(ex.id)}
-                  onChange={() => handleDailyExerciseToggle(ex.id)}
-                />
-                {ex.label}
-              </label>
+            {allDailyExercises.map((ex: { id: string; label: string }) => (
+              <div key={ex.id} className="checkbox-item-with-delete">
+                <label className="checkbox-item">
+                  <input
+                    type="checkbox"
+                    checked={dailyExercises.includes(ex.id)}
+                    onChange={() => handleDailyExerciseToggle(ex.id)}
+                  />
+                  {ex.label}
+                </label>
+                {customDailyExercises.some(c => c.id === ex.id) && (
+                  <button
+                    type="button"
+                    className="delete-exercise-btn"
+                    onClick={() => handleRemoveCustomExercise('daily', ex.id)}
+                    aria-label={`Remove ${ex.label}`}
+                  >
+                    x
+                  </button>
+                )}
+              </div>
             ))}
           </div>
+          {showAddDaily ? (
+            <div className="add-exercise-form">
+              <input
+                type="text"
+                placeholder="Exercise name (e.g., Squats - 20 reps)"
+                value={newExerciseLabel}
+                onChange={e => setNewExerciseLabel(e.target.value)}
+                onKeyDown={e => e.key === 'Enter' && (e.preventDefault(), handleAddCustomExercise('daily'))}
+              />
+              <div className="add-exercise-buttons">
+                <button type="button" onClick={() => handleAddCustomExercise('daily')}>Add</button>
+                <button type="button" className="cancel-btn" onClick={() => { setShowAddDaily(false); setNewExerciseLabel('') }}>Cancel</button>
+              </div>
+            </div>
+          ) : (
+            <button type="button" className="add-exercise-btn" onClick={() => setShowAddDaily(true)}>
+              + Add Exercise
+            </button>
+          )}
         </div>
 
         <div className="form-group">
           <label>Other Exercise Today (check all that apply)</label>
           <div className="checkbox-group">
-            {OTHER_EXERCISES.map(exercise => (
-              <label key={exercise} className="checkbox-item">
-                <input
-                  type="checkbox"
-                  checked={otherExercises.includes(exercise)}
-                  onChange={() => handleOtherExerciseToggle(exercise)}
-                />
-                {exercise}
-              </label>
+            {allOtherExercises.map((exercise: string) => (
+              <div key={exercise} className="checkbox-item-with-delete">
+                <label className="checkbox-item">
+                  <input
+                    type="checkbox"
+                    checked={otherExercises.includes(exercise)}
+                    onChange={() => handleOtherExerciseToggle(exercise)}
+                  />
+                  {exercise}
+                </label>
+                {customOtherExercises.some(c => c.label === exercise) && (
+                  <button
+                    type="button"
+                    className="delete-exercise-btn"
+                    onClick={() => {
+                      const custom = customOtherExercises.find(c => c.label === exercise)
+                      if (custom) handleRemoveCustomExercise('other', custom.id)
+                    }}
+                    aria-label={`Remove ${exercise}`}
+                  >
+                    x
+                  </button>
+                )}
+              </div>
             ))}
           </div>
+          {showAddOther ? (
+            <div className="add-exercise-form">
+              <input
+                type="text"
+                placeholder="Exercise name (e.g., Tennis)"
+                value={newExerciseLabel}
+                onChange={e => setNewExerciseLabel(e.target.value)}
+                onKeyDown={e => e.key === 'Enter' && (e.preventDefault(), handleAddCustomExercise('other'))}
+              />
+              <div className="add-exercise-buttons">
+                <button type="button" onClick={() => handleAddCustomExercise('other')}>Add</button>
+                <button type="button" className="cancel-btn" onClick={() => { setShowAddOther(false); setNewExerciseLabel('') }}>Cancel</button>
+              </div>
+            </div>
+          ) : (
+            <button type="button" className="add-exercise-btn" onClick={() => setShowAddOther(true)}>
+              + Add Exercise Type
+            </button>
+          )}
         </div>
       </div>
 

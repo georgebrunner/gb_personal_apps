@@ -277,3 +277,38 @@ export async function useFavorite(id: string): Promise<FavoriteFood> {
   if (!response.ok) throw new Error('Failed to use favorite')
   return response.json()
 }
+
+// Settings / Custom exercises
+export interface CustomExercise {
+  id: string
+  label: string
+}
+
+export interface Settings {
+  custom_daily_exercises: CustomExercise[]
+  custom_other_exercises: CustomExercise[]
+}
+
+export async function getSettings(): Promise<Settings> {
+  const response = await fetch(`${API_BASE}/settings`)
+  if (!response.ok) throw new Error('Failed to fetch settings')
+  return response.json()
+}
+
+export async function addCustomExercise(exerciseType: 'daily' | 'other', exercise: CustomExercise): Promise<Settings> {
+  const response = await fetch(`${API_BASE}/settings/exercises/${exerciseType}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(exercise)
+  })
+  if (!response.ok) throw new Error('Failed to add custom exercise')
+  return response.json()
+}
+
+export async function removeCustomExercise(exerciseType: 'daily' | 'other', exerciseId: string): Promise<Settings> {
+  const response = await fetch(`${API_BASE}/settings/exercises/${exerciseType}/${exerciseId}`, {
+    method: 'DELETE'
+  })
+  if (!response.ok) throw new Error('Failed to remove custom exercise')
+  return response.json()
+}
