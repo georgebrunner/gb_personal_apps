@@ -12,19 +12,28 @@ import {
 } from './api'
 
 const APP_LINKS = [
-  { name: 'Health', port: 5173 },
-  { name: 'Guitar', port: 5174 },
-  { name: 'Todo', port: 5175 },
-  { name: 'Finance', port: 5176 },
-  { name: 'Sales', port: 5178 },
+  { name: 'Health', port: 5173, path: '/health/' },
+  { name: 'Guitar', port: 5174, path: '/guitar/' },
+  { name: 'Todo', port: 5175, path: '/todo/' },
+  { name: 'Finance', port: 5176, path: '/finance/' },
+  { name: 'Sales', port: 5178, path: '/sales/' },
 ]
+
+const currentApp = 'Sales'
+
+function getAppUrl(app: typeof APP_LINKS[0]): string {
+  const isProduction = window.location.port === '' || window.location.port === '80' || window.location.port === '443'
+  if (isProduction) {
+    return `${window.location.protocol}//${window.location.hostname}${app.path}`
+  }
+  return `http://${window.location.hostname}:${app.port}`
+}
 
 function App() {
   const [prospects, setProspects] = useState<Prospect[]>([])
   const [newProspectName, setNewProspectName] = useState('')
   const [newProspectVertical, setNewProspectVertical] = useState<VerticalType | ''>('')
   const [loading, setLoading] = useState(true)
-  const currentPort = 5178
 
   useEffect(() => {
     loadProspects()
@@ -117,9 +126,9 @@ function App() {
       <nav className="app-nav">
         {APP_LINKS.map(app => (
           <a
-            key={app.port}
-            href={`http://${window.location.hostname}:${app.port}`}
-            className={`app-link ${app.port === currentPort ? 'active' : ''}`}
+            key={app.name}
+            href={getAppUrl(app)}
+            className={`app-link ${app.name === currentApp ? 'active' : ''}`}
           >
             {app.name}
           </a>
