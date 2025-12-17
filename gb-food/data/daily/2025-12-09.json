@@ -1,0 +1,54 @@
+{
+  "date": "2025-12-09",
+  "entries": [
+    {
+      "id": "2842795c-9a94-47c1-bb16-ece8d4e8b3c6",
+      "name": "Coffee",
+      "meal_type": "breakfast",
+      "calories": 25,
+      "protein_g": null,
+      "carbs_g": null,
+      "fat_g": null,
+      "notes": null,
+      "recipe_id": null,
+      "created_at": "2025-12-09T10:56:05.400005"
+    },
+    {
+      "id": "9096a445-12be-49b8-b5db-af43c85d0ade",
+      "name": "2 Eggs and a slice of bacon",
+      "meal_type": "breakfast",
+      "calories": 300,
+      "protein_g": null,
+      "carbs_g": null,
+      "fat_g": null,
+      "notes": null,
+      "recipe_id": null,
+      "created_at": "2025-12-09T10:58:38.219263"
+    },
+    {
+      "id": "fba78592-4b3f-4554-9c09-f31a3f1e0ea7",
+      "name": "Garden Salad with Tuna salad (5 oz)",
+      "meal_type": "lunch",
+      "calories": 225,
+      "protein_g": null,
+      "carbs_g": null,
+      "fat_g": null,
+      "notes": null,
+      "recipe_id": null,
+      "created_at": "2025-12-09T13:20:42.249838"
+    },
+    {
+      "id": "6d448762-9a09-4775-9e6a-638a504c8cac",
+      "name": "Oatmeal",
+      "meal_type": "breakfast",
+      "calories": 230,
+      "protein_g": null,
+      "carbs_g": null,
+      "fat_g": null,
+      "notes": null,
+      "recipe_id": null,
+      "created_at": "2025-12-09T23:36:15.882935"
+    }
+  ],
+  "updated_at": "2025-12-09T23:36:15.882935"
+}

@@ -2,7 +2,6 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from datetime import date, datetime
 from typing import Optional
-
 from .models import PracticeSession, Song, SongUpdate, Skills, DailyGuitarEntry
 from . import storage, stats
 
@@ -153,3 +152,4 @@ def get_tuning_stats():
 @app.get("/health")
 def health_check():
     return {"status": "healthy", "timestamp": datetime.now().isoformat()}
+

@@ -1,5 +1,7 @@
-// Use the same host as the frontend, but port 8001 for the API
-const API_BASE = `http://${window.location.hostname}:8001`
+// API base URL - uses /api/guitar in production, port 8001 in development
+const API_BASE = import.meta.env.PROD
+  ? '/api/guitar'
+  : `http://${window.location.hostname}:8001`
 
 export interface PracticeSession {
   date: string

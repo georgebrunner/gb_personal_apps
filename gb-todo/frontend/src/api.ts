@@ -1,5 +1,7 @@
-// Use dynamic API base for accessing from different devices
-const API_BASE = `http://${window.location.hostname}:8003`
+// API base URL - uses /api/todo in production, port 8003 in development
+const API_BASE = import.meta.env.PROD
+  ? '/api/todo'
+  : `http://${window.location.hostname}:8003`
 
 export type ListType = 'todo' | 'shopping' | 'notes'
 

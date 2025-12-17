@@ -2,13 +2,13 @@
   {
     "id": "1f600396-ac62-4182-8f86-afd06ed11e10",
     "text": "Cans of Tuna",
-    "completed": false,
+    "completed": true,
     "due_date": null,
     "priority": null,
     "category": null,
     "list_type": "shopping",
     "created_at": "2025-12-07T12:18:46.776332",
-    "updated_at": "2025-12-07T13:19:32.968713"
+    "updated_at": "2025-12-09T10:34:52.563035"
   },
   {
     "id": "e770d56e-7b2b-4333-b869-a68816728509",
@@ -46,13 +46,13 @@
   {
     "id": "ec453ba8-e744-42cb-a512-b9ac393d8194",
     "text": "Salad stuff (Lettuce, tomatoes,",
-    "completed": false,
+    "completed": true,
     "due_date": null,
     "priority": null,
     "category": null,
     "list_type": "shopping",
     "created_at": "2025-12-07T13:26:31.076236",
-    "updated_at": "2025-12-07T13:26:31.076236"
+    "updated_at": "2025-12-09T10:34:42.855027"
   },
   {
     "id": "147111f7-2660-430f-a966-ab3f14dea9d9",
@@ -64,5 +64,137 @@
     "list_type": "todo",
     "created_at": "2025-12-07T13:27:04.191317",
     "updated_at": "2025-12-07T13:27:04.191317"
+  },
+  {
+    "id": "934d9d9c-77ea-41af-8830-bf13d6c256c0",
+    "text": "Wegmans Frosted Mini-wheats family size",
+    "completed": false,
+    "due_date": null,
+    "priority": null,
+    "category": null,
+    "list_type": "shopping",
+    "store": "wegmans",
+    "created_at": "2025-12-07T17:12:44.419531",
+    "updated_at": "2025-12-07T17:12:44.421519"
+  },
+  {
+    "id": "d99a312a-d20a-4da2-ad4c-04e242bc899a",
+    "text": "Cooper sharp",
+    "completed": false,
+    "due_date": null,
+    "priority": null,
+    "category": null,
+    "list_type": "shopping",
+    "store": "wegmans",
+    "created_at": "2025-12-07T17:13:00.382273",
+    "updated_at": "2025-12-07T17:13:00.382273"
+  },
+  {
+    "id": "41add81f-18f0-471a-bd44-e816cbe56b56",
+    "text": "Jalapenos - fresh",
+    "completed": false,
+    "due_date": null,
+    "priority": null,
+    "category": null,
+    "list_type": "shopping",
+    "store": "wegmans",
+    "created_at": "2025-12-07T17:13:24.606825",
+    "updated_at": "2025-12-07T17:13:24.606825"
+  },
+  {
+    "id": "87f3034b-42ff-4042-ac66-c84ab67420e9",
+    "text": "Avocados",
+    "completed": false,
+    "due_date": null,
+    "priority": null,
+    "category": null,
+    "list_type": "shopping",
+    "store": "wegmans",
+    "created_at": "2025-12-07T17:13:43.491166",
+    "updated_at": "2025-12-07T17:13:43.491166"
+  },
+  {
+    "id": "4b9d2426-f79a-484c-9f32-2f3e8580580a",
+    "text": "Large bag of Carrots",
+    "completed": true,
+    "due_date": null,
+    "priority": null,
+    "category": null,
+    "list_type": "shopping",
+    "store": "wegmans",
+    "created_at": "2025-12-07T17:14:23.943082",
+    "updated_at": "2025-12-09T10:35:03.688418"
+  },
+  {
+    "id": "271f6882-19a9-4399-8662-2aae2e8b2890",
+    "text": "Combo pumperknick sourdough bread",
+    "completed": false,
+    "due_date": null,
+    "priority": null,
+    "category": null,
+    "list_type": "shopping",
+    "store": "wegmans",
+    "created_at": "2025-12-07T17:14:56.084601",
+    "updated_at": "2025-12-07T17:14:56.084601"
+  },
+  {
+    "id": "7a0e4c32-6871-4faa-a8ba-f720686e29ea",
+    "text": "Eggs",
+    "completed": true,
+    "due_date": null,
+    "priority": null,
+    "category": null,
+    "list_type": "shopping",
+    "store": "sams_club",
+    "created_at": "2025-12-07T17:15:12.563672",
+    "updated_at": "2025-12-08T17:54:57.325517"
+  },
+  {
+    "id": "e650fea6-3fbd-4444-8932-93cc4ad86d57",
+    "text": "Tuna cans",
+    "completed": true,
+    "due_date": null,
+    "priority": null,
+    "category": null,
+    "list_type": "shopping",
+    "store": "sams_club",
+    "created_at": "2025-12-07T17:15:23.740534",
+    "updated_at": "2025-12-09T11:02:09.398760"
+  },
+  {
+    "id": "8ce4abdd-35d8-431c-b2ba-ddaff6ef552e",
+    "text": "Sugar free Ketchup",
+    "completed": false,
+    "due_date": null,
+    "priority": null,
+    "category": null,
+    "list_type": "shopping",
+    "store": "walmart",
+    "created_at": "2025-12-07T17:15:43.556864",
+    "updated_at": "2025-12-07T17:15:43.556864"
+  },
+  {
+    "id": "e711cb6d-26b4-4e63-b513-b52135d76d7b",
+    "text": "Large Tuna cans",
+    "completed": true,
+    "due_date": null,
+    "priority": null,
+    "category": null,
+    "list_type": "shopping",
+    "store": null,
+    "created_at": "2025-12-08T16:26:55.510469",
+    "updated_at": "2025-12-09T10:35:19.006722"
+  },
+  {
+    "id": "40be3faa-135b-4ac4-be5d-c25c2b77c11d",
+    "text": "Large cans of Tuna",
+    "completed": false,
+    "due_date": null,
+    "priority": null,
+    "category": null,
+    "list_type": "shopping",
+    "store": "redners",
+    "created_at": "2025-12-09T10:34:28.680326",
+    "updated_at": "2025-12-09T10:34:28.680326"
   }
 ]

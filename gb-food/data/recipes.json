@@ -1,0 +1,72 @@
+[
+  {
+    "id": "5d0e8d9b-5f97-4149-8fdb-3c810091bfd6",
+    "name": "Turkey Soup - Wild Rice and Mushrooms",
+    "description": null,
+    "ingredients": [
+      "Left over turkey (whilte meat)",
+      "Mushrooms",
+      "Wild Rice",
+      "3-4 boxes of low sodium chicken broth"
+    ],
+    "instructions": null,
+    "servings": null,
+    "prep_time_minutes": null,
+    "cook_time_minutes": null,
+    "calories_per_serving": null,
+    "protein_g": null,
+    "carbs_g": null,
+    "fat_g": null,
+    "tags": [
+      "Soup",
+      "Thanksgiving"
+    ],
+    "image": null,
+    "created_at": "2025-12-07T17:08:52.360614",
+    "updated_at": "2025-12-07T17:08:52.360614"
+  },
+  {
+    "id": "c80736c5-c66e-47c7-8968-00ac3a23629f",
+    "name": "Cabbage Soup with Italian Sausage",
+    "description": null,
+    "ingredients": [
+      "Head of Shredded",
+      "Beef or chicken stock",
+      "Sweet Italian Sausage",
+      "Spices"
+    ],
+    "instructions": null,
+    "servings": null,
+    "prep_time_minutes": null,
+    "cook_time_minutes": null,
+    "calories_per_serving": null,
+    "protein_g": null,
+    "carbs_g": null,
+    "fat_g": null,
+    "tags": [],
+    "image": null,
+    "created_at": "2025-12-07T17:10:35.383851",
+    "updated_at": "2025-12-07T17:10:35.383851"
+  },
+  {
+    "id": "58cd0ecf-ffb0-48e3-bd1f-960020c6e3d0",
+    "name": "Clam Chowder",
+    "description": null,
+    "ingredients": [
+      "2 cans of clams",
+      "Potatoes"
+    ],
+    "instructions": null,
+    "servings": null,
+    "prep_time_minutes": null,
+    "cook_time_minutes": null,
+    "calories_per_serving": null,
+    "protein_g": null,
+    "carbs_g": null,
+    "fat_g": null,
+    "tags": [],
+    "image": null,
+    "created_at": "2025-12-08T11:00:40.854292",
+    "updated_at": "2025-12-08T11:00:40.854292"
+  }
+]

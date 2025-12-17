@@ -2,7 +2,6 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from datetime import datetime
 from typing import Optional
-
 from .models import TodoItem, TodoUpdate, STORES
 from . import storage
 
@@ -99,3 +98,4 @@ def delete_todo(todo_id: str):
 @app.get("/health")
 def health_check():
     return {"status": "healthy", "timestamp": datetime.now().isoformat()}
+

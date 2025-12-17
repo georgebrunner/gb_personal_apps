@@ -1,0 +1,78 @@
+{
+  "date": "2025-12-10",
+  "entries": [
+    {
+      "id": "2e9435ee-9649-4641-9670-caf687f43dd8",
+      "name": "Coffee",
+      "meal_type": "breakfast",
+      "calories": 25,
+      "protein_g": null,
+      "carbs_g": null,
+      "fat_g": null,
+      "notes": null,
+      "recipe_id": null,
+      "created_at": "2025-12-11T07:27:17.996152"
+    },
+    {
+      "id": "ffc22e5b-3029-4d77-ae47-aafbfb66bdaa",
+      "name": "Oatmeal",
+      "meal_type": "breakfast",
+      "calories": 230,
+      "protein_g": null,
+      "carbs_g": null,
+      "fat_g": null,
+      "notes": null,
+      "recipe_id": null,
+      "created_at": "2025-12-11T07:27:19.550239"
+    },
+    {
+      "id": "59677a8d-a2ad-4216-b57a-3953236d5d09",
+      "name": "Peanutbutter Toast",
+      "meal_type": "snack",
+      "calories": 200,
+      "protein_g": null,
+      "carbs_g": null,
+      "fat_g": null,
+      "notes": null,
+      "recipe_id": null,
+      "created_at": "2025-12-11T07:27:54.704077"
+    },
+    {
+      "id": "b82779d1-91bd-482a-bea7-cbb57b168644",
+      "name": "tuna melt on english muffine",
+      "meal_type": "dinner",
+      "calories": 200,
+      "protein_g": null,
+      "carbs_g": null,
+      "fat_g": null,
+      "notes": null,
+      "recipe_id": null,
+      "created_at": "2025-12-11T07:28:32.270146"
+    },
+    {
+      "id": "0e9ad72b-6b3d-496f-9d27-30787cb11044",
+      "name": "Nuts and Frosted mini-wheats",
+      "meal_type": "snack",
+      "calories": 100,
+      "protein_g": null,
+      "carbs_g": null,
+      "fat_g": null,
+      "notes": null,
+      "recipe_id": null,
+      "created_at": "2025-12-11T07:29:20.697809"
+    },
+    {
+      "id": "27df444b-be2b-4c84-9cea-c4303e47812f",
+      "name": "1/4 Cheese Sandwich on whole wheat",
+      "meal_type": "snack",
+      "calories": 50,
+      "protein_g": null,
+      "carbs_g": null,
+      "fat_g": null,
+      "notes": null,
+      "recipe_id": null,
+      "created_at": "2025-12-11T07:30:00.991365"
+    }
+  ],
+  "updated_at": "2025-12-11T07:30:00.991856"
+}

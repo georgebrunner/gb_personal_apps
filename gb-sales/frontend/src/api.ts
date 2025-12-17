@@ -1,15 +1,19 @@
-const API_BASE = `http://${window.location.hostname}:8005`
+// API base URL - uses /api/sales in production, port 8005 in development
+const API_BASE = import.meta.env.PROD
+  ? '/api/sales'
+  : `http://${window.location.hostname}:8005`
 
 export type ChecklistItemType =
-  | 'initial_meeting'
-  | 'nda'
-  | 'data_intake_proposal'
-  | 'pitch_deck'
-  | 'closing_meeting'
   | 'budget'
   | 'authority'
   | 'need'
   | 'timeline'
+  | 'initial_meeting'
+  | 'nda'
+  | 'data_intake'
+  | 'proposal'
+  | 'pitch_deck'
+  | 'closing_meeting'
   | 'prove_roi'
 
 export type VerticalType = 'life' | 'build' | 'legal'
@@ -39,15 +43,16 @@ export interface Prospect {
 }
 
 export const CHECKLIST_LABELS: Record<ChecklistItemType, string> = {
-  initial_meeting: 'Initial Meeting',
-  nda: 'NDA',
-  data_intake_proposal: 'Data Intake Proposal',
-  pitch_deck: 'Pitch Deck',
-  closing_meeting: 'Closing Meeting',
   budget: 'Budget (BANT)',
   authority: 'Authority (BANT)',
   need: 'Need (BANT)',
   timeline: 'Timeline (BANT)',
+  initial_meeting: 'Initial Meeting',
+  nda: 'NDA',
+  data_intake: 'Data Intake',
+  proposal: 'Proposal',
+  pitch_deck: 'Pitch Deck',
+  closing_meeting: 'Closing Meeting',
   prove_roi: 'Prove ROI'
 }
 

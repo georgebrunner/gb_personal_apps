@@ -1,5 +1,7 @@
-// Use the same host as the frontend, but port 8000 for the API
-const API_BASE = `http://${window.location.hostname}:8000`
+// API base URL - uses /api/health in production, port 8000 in development
+const API_BASE = import.meta.env.PROD
+  ? '/api/health'
+  : `http://${window.location.hostname}:8000`
 
 export interface DailyEntry {
   date: string
@@ -9,6 +11,7 @@ export interface DailyEntry {
   glucose?: number
   sleep_hours?: number
   water_glasses?: number  // 0-6 glasses
+  steps?: number  // daily step count
   alcohol?: boolean
   alcohol_drinks?: number  // 1-8 drinks
   alcohol_when?: string  // "today" or "yesterday"
@@ -132,8 +135,10 @@ export async function deleteTodoItem(date: string, itemId: string): Promise<void
   if (!response.ok) throw new Error('Failed to delete todo')
 }
 
-// Food tracking API (port 8004)
-const FOOD_API_BASE = `http://${window.location.hostname}:8004`
+// Food tracking API - uses /api/food in production, port 8004 in development
+const FOOD_API_BASE = import.meta.env.PROD
+  ? '/api/food'
+  : `http://${window.location.hostname}:8004`
 
 export type MealType = 'breakfast' | 'lunch' | 'dinner' | 'snack'
 

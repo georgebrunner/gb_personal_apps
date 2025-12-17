@@ -1,109 +1,92 @@
-import json
+"""
+Storage module for GB Guitar - works with both local files and S3.
+"""
+
+import sys
 from datetime import date, datetime
 from pathlib import Path
 from typing import Optional
 from uuid import uuid4
 
-# Base data directory
-DATA_DIR = Path(__file__).parent.parent.parent / "data"
-PRACTICE_DIR = DATA_DIR / "practice-log"
-DAILY_DIR = DATA_DIR / "daily"
-SONGS_FILE = DATA_DIR / "songs.json"
-SKILLS_FILE = DATA_DIR / "skills.json"
+# Add shared module to path
+sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent / "shared"))
+from storage import get_storage
+
+# Initialize storage
+_storage = get_storage("guitar", str(Path(__file__).parent.parent.parent / "data"))
 
 
-def ensure_dirs():
-    """Ensure all data directories exist."""
-    PRACTICE_DIR.mkdir(parents=True, exist_ok=True)
-    DAILY_DIR.mkdir(parents=True, exist_ok=True)
-    DATA_DIR.mkdir(parents=True, exist_ok=True)
-
-
-def date_to_filename(d: date) -> str:
-    """Convert date to filename format."""
-    return d.strftime("%Y-%m-%d") + ".json"
+def date_to_key(d: date, folder: str) -> str:
+    """Convert date to storage key."""
+    return f"{folder}/{d.strftime('%Y-%m-%d')}.json"
 
 
 # Practice sessions
 def save_practice_session(session: dict) -> dict:
     """Save a practice session. Multiple sessions per day stored in array."""
-    ensure_dirs()
     session_date = session.get("date")
     if isinstance(session_date, str):
         session_date = datetime.strptime(session_date, "%Y-%m-%d").date()
 
-    filename = PRACTICE_DIR / date_to_filename(session_date)
+    key = date_to_key(session_date, "practice-log")
+    existing = _storage.read_json(key) or []
 
-    # Load existing sessions for this date
-    existing = []
-    if filename.exists():
-        with open(filename, "r") as f:
-            existing = json.load(f)
-
-    # Add new session with timestamp
     session_copy = session.copy()
     session_copy["date"] = session_date.isoformat()
     session_copy["created_at"] = datetime.now().isoformat()
     existing.append(session_copy)
 
-    with open(filename, "w") as f:
-        json.dump(existing, f, indent=2)
-
+    _storage.write_json(key, existing)
     return session_copy
 
 
 def get_practice_sessions(d: date) -> list[dict]:
     """Get all practice sessions for a date."""
-    filename = PRACTICE_DIR / date_to_filename(d)
-    if filename.exists():
-        with open(filename, "r") as f:
-            return json.load(f)
-    return []
+    key = date_to_key(d, "practice-log")
+    return _storage.read_json(key) or []
 
 
 def get_all_practice_sessions(limit: int = 30) -> list[dict]:
     """Get all practice sessions, flattened and sorted by date descending."""
-    ensure_dirs()
+    keys = _storage.list_keys("practice-log/", ".json")
+    keys = sorted(keys, reverse=True)[:limit]
+
     sessions = []
-    for file in sorted(PRACTICE_DIR.glob("*.json"), reverse=True)[:limit]:
-        with open(file, "r") as f:
-            day_sessions = json.load(f)
-            sessions.extend(day_sessions)
+    for key in keys:
+        day_sessions = _storage.read_json(key) or []
+        sessions.extend(day_sessions)
     return sessions
 
 
 def get_all_practice_dates() -> list[date]:
     """Get all dates that have practice sessions."""
-    ensure_dirs()
+    keys = _storage.list_keys("practice-log/", ".json")
     dates = []
-    for file in PRACTICE_DIR.glob("*.json"):
-        date_str = file.stem  # filename without extension
-        dates.append(datetime.strptime(date_str, "%Y-%m-%d").date())
+    for key in keys:
+        filename = key.split("/")[-1]
+        date_str = filename.replace(".json", "")
+        try:
+            dates.append(datetime.strptime(date_str, "%Y-%m-%d").date())
+        except ValueError:
+            continue
     return sorted(dates, reverse=True)
 
 
 # Songs
 def load_songs() -> list[dict]:
     """Load all songs from file."""
-    ensure_dirs()
-    if SONGS_FILE.exists():
-        with open(SONGS_FILE, "r") as f:
-            return json.load(f)
-    return []
+    return _storage.read_json("songs.json") or []
 
 
 def save_songs(songs: list[dict]):
     """Save all songs to file."""
-    ensure_dirs()
-    with open(SONGS_FILE, "w") as f:
-        json.dump(songs, f, indent=2)
+    _storage.write_json("songs.json", songs)
 
 
 def add_song(song: dict) -> dict:
     """Add a new song."""
     songs = load_songs()
 
-    # Generate ID if not present
     if not song.get("id"):
         song["id"] = str(uuid4())
 
@@ -152,11 +135,9 @@ def get_song(song_id: str) -> Optional[dict]:
 # Skills
 def load_skills() -> dict:
     """Load skills checklist."""
-    ensure_dirs()
-    if SKILLS_FILE.exists():
-        with open(SKILLS_FILE, "r") as f:
-            return json.load(f)
-    # Return default skills structure
+    skills = _storage.read_json("skills.json")
+    if skills:
+        return skills
     return {
         "chords": {
             "open_chords": False,
@@ -185,46 +166,35 @@ def load_skills() -> dict:
 
 def save_skills(skills: dict) -> dict:
     """Save skills checklist."""
-    ensure_dirs()
     skills["updated_at"] = datetime.now().isoformat()
-    with open(SKILLS_FILE, "w") as f:
-        json.dump(skills, f, indent=2)
+    _storage.write_json("skills.json", skills)
     return skills
 
 
 # Daily guitar entries (tuning, etc.)
 def get_daily_guitar_entry(d: date) -> Optional[dict]:
     """Get daily guitar entry for a date."""
-    ensure_dirs()
-    filename = DAILY_DIR / date_to_filename(d)
-    if filename.exists():
-        with open(filename, "r") as f:
-            return json.load(f)
-    return None
+    key = date_to_key(d, "daily")
+    return _storage.read_json(key)
 
 
 def save_daily_guitar_entry(entry: dict) -> dict:
     """Save a daily guitar entry."""
-    ensure_dirs()
     entry_date = entry.get("date")
     if isinstance(entry_date, str):
         entry_date = datetime.strptime(entry_date, "%Y-%m-%d").date()
-
-    filename = DAILY_DIR / date_to_filename(entry_date)
 
     entry_copy = entry.copy()
     entry_copy["date"] = entry_date.isoformat()
     entry_copy["updated_at"] = datetime.now().isoformat()
 
-    with open(filename, "w") as f:
-        json.dump(entry_copy, f, indent=2)
-
+    key = date_to_key(entry_date, "daily")
+    _storage.write_json(key, entry_copy)
     return entry_copy
 
 
 def get_days_since_last_tuning() -> dict:
     """Get days since last tuning for each guitar."""
-    ensure_dirs()
     today = date.today()
 
     result = {
@@ -233,20 +203,21 @@ def get_days_since_last_tuning() -> dict:
         "bass": None
     }
 
-    # Get all daily files sorted by date descending
-    files = sorted(DAILY_DIR.glob("*.json"), reverse=True)
+    keys = _storage.list_keys("daily/", ".json")
+    keys = sorted(keys, reverse=True)
 
-    for file in files:
-        date_str = file.stem
+    for key in keys:
+        filename = key.split("/")[-1]
+        date_str = filename.replace(".json", "")
         try:
             file_date = datetime.strptime(date_str, "%Y-%m-%d").date()
         except ValueError:
             continue
 
-        with open(file, "r") as f:
-            entry = json.load(f)
+        entry = _storage.read_json(key)
+        if not entry:
+            continue
 
-        # Check each guitar type
         if result["acoustic"] is None and entry.get("tuned_acoustic"):
             result["acoustic"] = (today - file_date).days
         if result["electric"] is None and entry.get("tuned_electric"):
@@ -254,7 +225,6 @@ def get_days_since_last_tuning() -> dict:
         if result["bass"] is None and entry.get("tuned_bass"):
             result["bass"] = (today - file_date).days
 
-        # If we found all, stop searching
         if all(v is not None for v in result.values()):
             break
 

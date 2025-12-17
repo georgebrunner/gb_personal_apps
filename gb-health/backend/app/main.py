@@ -2,7 +2,6 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from datetime import date, datetime
 from typing import Optional
-
 from .models import DailyEntry, ExerciseEntry, TodoItem, TodoList
 from . import storage
 

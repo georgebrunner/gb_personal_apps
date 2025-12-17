@@ -1,54 +1,41 @@
-import json
+"""
+Storage module for GB Todo - works with both local files and S3.
+"""
+
+import sys
 from datetime import datetime
 from pathlib import Path
 from typing import Optional
 from uuid import uuid4
 
-# Base data directory
-DATA_DIR = Path(__file__).parent.parent.parent / "data"
-TODOS_DIR = DATA_DIR / "todos"
+# Add shared module to path
+sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent / "shared"))
+from storage import get_storage
 
-
-def ensure_dirs():
-    """Ensure all data directories exist."""
-    TODOS_DIR.mkdir(parents=True, exist_ok=True)
-    DATA_DIR.mkdir(parents=True, exist_ok=True)
-
-
-def get_todos_file() -> Path:
-    """Get the main todos file path."""
-    return TODOS_DIR / "todos.json"
+# Initialize storage
+_storage = get_storage("todo", str(Path(__file__).parent.parent.parent / "data"))
 
 
 def load_todos() -> list[dict]:
     """Load all todos from file."""
-    ensure_dirs()
-    todos_file = get_todos_file()
-    if todos_file.exists():
-        with open(todos_file, "r") as f:
-            return json.load(f)
-    return []
+    return _storage.read_json("todos/todos.json") or []
 
 
 def save_todos(todos: list[dict]):
     """Save all todos to file."""
-    ensure_dirs()
-    with open(get_todos_file(), "w") as f:
-        json.dump(todos, f, indent=2)
+    _storage.write_json("todos/todos.json", todos)
 
 
 def add_todo(todo: dict) -> dict:
     """Add a new todo."""
     todos = load_todos()
 
-    # Generate ID if not present
     if not todo.get("id"):
         todo["id"] = str(uuid4())
 
     todo["created_at"] = datetime.now().isoformat()
     todo["updated_at"] = datetime.now().isoformat()
 
-    # Convert date to string if present
     if todo.get("due_date") and hasattr(todo["due_date"], "isoformat"):
         todo["due_date"] = todo["due_date"].isoformat()
 
@@ -64,7 +51,6 @@ def update_todo(todo_id: str, updates: dict) -> Optional[dict]:
         if todo.get("id") == todo_id:
             for key, value in updates.items():
                 if value is not None:
-                    # Convert date to string if present
                     if key == "due_date" and hasattr(value, "isoformat"):
                         value = value.isoformat()
                     todo[key] = value

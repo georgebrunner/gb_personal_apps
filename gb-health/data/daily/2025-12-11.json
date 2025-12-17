@@ -1,0 +1,32 @@
+{
+  "date": "2025-12-11",
+  "weight": 218.0,
+  "blood_pressure_systolic": null,
+  "blood_pressure_diastolic": null,
+  "glucose": 134,
+  "steps": null,
+  "sleep_hours": 6.0,
+  "water_glasses": 0,
+  "alcohol": true,
+  "alcohol_drinks": 6,
+  "alcohol_when": null,
+  "exercise": "",
+  "exercises": null,
+  "supplements": [],
+  "notes": "Good night spleep. Got up early and did excercises",
+  "daily_exercises": [
+    "dumbbell_curls",
+    "balance",
+    "knee_lift_and_hold_100_count",
+    "dumbbell_curls_50_reps_each_arm_"
+  ],
+  "coffee": false,
+  "oatmeal": false,
+  "carrots": 2,
+  "food_log": "",
+  "shower": true,
+  "shave": false,
+  "brush_teeth": true,
+  "floss": false,
+  "updated_at": "2025-12-11T11:39:51.765961"
+}

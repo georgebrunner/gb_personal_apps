@@ -1,0 +1,30 @@
+{
+  "date": "2025-12-09",
+  "weight": 217.0,
+  "blood_pressure_systolic": null,
+  "blood_pressure_diastolic": null,
+  "glucose": 120,
+  "steps": null,
+  "sleep_hours": 5.0,
+  "water_glasses": 1,
+  "alcohol": true,
+  "alcohol_drinks": 4,
+  "alcohol_when": null,
+  "exercise": null,
+  "exercises": null,
+  "supplements": null,
+  "notes": null,
+  "daily_exercises": [
+    "dumbbell_curls",
+    "balance"
+  ],
+  "coffee": null,
+  "oatmeal": null,
+  "carrots": 2,
+  "food_log": null,
+  "shower": null,
+  "shave": null,
+  "brush_teeth": true,
+  "floss": true,
+  "updated_at": "2025-12-09T14:52:41.334750"
+}

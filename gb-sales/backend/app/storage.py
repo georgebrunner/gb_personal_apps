@@ -1,17 +1,21 @@
-from pathlib import Path
-import json
+"""
+Storage module for GB Sales - works with both local files and S3.
+"""
+
+import sys
 from datetime import datetime
-import uuid
+from pathlib import Path
 from typing import List, Optional
+import uuid
+
+# Add shared module to path
+sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent / "shared"))
+from storage import get_storage
+
 from .models import ChecklistItem
 
-DATA_DIR = Path(__file__).parent.parent.parent / "data"
-PROSPECTS_FILE = DATA_DIR / "prospects.json"
-
-
-def ensure_dirs():
-    """Create directories if they don't exist."""
-    DATA_DIR.mkdir(parents=True, exist_ok=True)
+# Initialize storage
+_storage = get_storage("sales", str(Path(__file__).parent.parent.parent / "data"))
 
 
 def _create_default_checklist() -> List[dict]:
@@ -24,18 +28,12 @@ def _create_default_checklist() -> List[dict]:
 
 def _load_prospects() -> List[dict]:
     """Load all prospects from file."""
-    ensure_dirs()
-    if PROSPECTS_FILE.exists():
-        with open(PROSPECTS_FILE, "r") as f:
-            return json.load(f)
-    return []
+    return _storage.read_json("prospects.json") or []
 
 
 def _save_prospects(prospects: List[dict]):
     """Save all prospects to file."""
-    ensure_dirs()
-    with open(PROSPECTS_FILE, "w") as f:
-        json.dump(prospects, f, indent=2)
+    _storage.write_json("prospects.json", prospects)
 
 
 def get_all_prospects() -> List[dict]:

@@ -2,7 +2,6 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from datetime import date, datetime
 from typing import Optional
-
 from .models import (
     FoodEntry, DailyFoodLog, Recipe, RecipeUpdate,
     FavoriteFood, FavoriteFoodUpdate
@@ -212,3 +211,4 @@ def use_favorite(favorite_id: str):
 @app.get("/health")
 def health_check():
     return {"status": "healthy", "timestamp": datetime.now().isoformat()}
+

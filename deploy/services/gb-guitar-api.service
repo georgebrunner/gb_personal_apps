@@ -1,0 +1,15 @@
+[Unit]
+Description=GB Guitar API
+After=network.target
+
+[Service]
+Type=simple
+User=ec2-user
+WorkingDirectory=/home/ec2-user/gb-apps/gb-guitar/backend
+ExecStart=/usr/bin/python3.11 -m uvicorn app.main:app --host 127.0.0.1 --port 8001
+Restart=always
+RestartSec=3
+Environment=PYTHONPATH=/home/ec2-user/gb-apps
+
+[Install]
+WantedBy=multi-user.target

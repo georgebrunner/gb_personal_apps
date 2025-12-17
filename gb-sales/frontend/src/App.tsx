@@ -8,8 +8,7 @@ import {
   deleteProspect,
   CHECKLIST_LABELS,
   ChecklistItemType,
-  VerticalType,
-  VERTICAL_LABELS
+  VerticalType
 } from './api'
 
 const APP_LINKS = [

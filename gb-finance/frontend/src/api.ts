@@ -1,4 +1,7 @@
-const API_BASE = `http://${window.location.hostname}:8002`
+// API base URL - uses /api/finance in production, port 8002 in development
+const API_BASE = import.meta.env.PROD
+  ? '/api/finance'
+  : `http://${window.location.hostname}:8002`
 
 // ============ TYPES ============
 

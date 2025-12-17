@@ -18,7 +18,6 @@ class DailyEntry(BaseModel):
     exercise: Optional[str] = None  # Legacy single exercise
     exercises: Optional[list[str]] = None  # New: multiple exercises per day
     supplements: Optional[list[str]] = None
-    stress_level: Optional[int] = None  # 1-10
     notes: Optional[str] = None
     # Daily exercises checkboxes
     daily_exercises: Optional[list[str]] = None  # e.g., ["dumbbell_curls", "balance_left", "balance_right"]

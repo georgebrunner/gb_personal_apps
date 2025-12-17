@@ -1,0 +1,42 @@
+{
+  "date": "2025-12-11",
+  "entries": [
+    {
+      "id": "18951c75-ae52-4c3d-8bbd-152be1a65876",
+      "name": "Coffee",
+      "meal_type": "breakfast",
+      "calories": 25,
+      "protein_g": null,
+      "carbs_g": null,
+      "fat_g": null,
+      "notes": null,
+      "recipe_id": null,
+      "created_at": "2025-12-11T09:58:24.658298"
+    },
+    {
+      "id": "ebb8d4e9-9653-4ed2-9899-f7f233ea1463",
+      "name": "1/2 donought",
+      "meal_type": "snack",
+      "calories": 50,
+      "protein_g": null,
+      "carbs_g": null,
+      "fat_g": null,
+      "notes": null,
+      "recipe_id": null,
+      "created_at": "2025-12-11T11:40:44.608489"
+    },
+    {
+      "id": "3a4a825d-4693-4cbd-9d22-0f3ffb3ef791",
+      "name": "Salad with Swiss and thousand island",
+      "meal_type": "lunch",
+      "calories": 425,
+      "protein_g": null,
+      "carbs_g": null,
+      "fat_g": null,
+      "notes": null,
+      "recipe_id": null,
+      "created_at": "2025-12-11T12:33:07.674759"
+    }
+  ],
+  "updated_at": "2025-12-11T12:33:07.677155"
+}

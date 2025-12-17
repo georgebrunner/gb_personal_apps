@@ -1,0 +1,15 @@
+[Unit]
+Description=GB Health API
+After=network.target
+
+[Service]
+Type=simple
+User=ec2-user
+WorkingDirectory=/home/ec2-user/gb-apps/gb-health/backend
+ExecStart=/usr/bin/python3.11 -m uvicorn app.main:app --host 127.0.0.1 --port 8000
+Restart=always
+RestartSec=3
+Environment=PYTHONPATH=/home/ec2-user/gb-apps
+
+[Install]
+WantedBy=multi-user.target

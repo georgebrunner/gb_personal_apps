@@ -3,80 +3,284 @@
     "id": "1",
     "name": "HSC",
     "checklist": [
-      {"item": "initial_meeting", "completed": false, "completed_at": null, "notes": null},
-      {"item": "nda", "completed": false, "completed_at": null, "notes": null},
-      {"item": "data_intake_proposal", "completed": false, "completed_at": null, "notes": null},
-      {"item": "pitch_deck", "completed": false, "completed_at": null, "notes": null},
-      {"item": "closing_meeting", "completed": false, "completed_at": null, "notes": null},
-      {"item": "budget", "completed": false, "completed_at": null, "notes": null},
-      {"item": "authority", "completed": false, "completed_at": null, "notes": null},
-      {"item": "need", "completed": false, "completed_at": null, "notes": null},
-      {"item": "timeline", "completed": false, "completed_at": null, "notes": null},
-      {"item": "prove_roi", "completed": false, "completed_at": null, "notes": null}
+      {
+        "item": "initial_meeting",
+        "completed": true,
+        "completed_at": "2025-12-08T14:01:52.318316",
+        "notes": null
+      },
+      {
+        "item": "nda",
+        "completed": true,
+        "completed_at": "2025-12-08T15:24:06.224994",
+        "notes": null
+      },
+      {
+        "item": "data_intake_proposal",
+        "completed": false,
+        "completed_at": null,
+        "notes": null
+      },
+      {
+        "item": "pitch_deck",
+        "completed": false,
+        "completed_at": null,
+        "notes": null
+      },
+      {
+        "item": "closing_meeting",
+        "completed": false,
+        "completed_at": null,
+        "notes": null
+      },
+      {
+        "item": "budget",
+        "completed": false,
+        "completed_at": null,
+        "notes": null
+      },
+      {
+        "item": "authority",
+        "completed": false,
+        "completed_at": null,
+        "notes": null
+      },
+      {
+        "item": "need",
+        "completed": false,
+        "completed_at": null,
+        "notes": null
+      },
+      {
+        "item": "timeline",
+        "completed": false,
+        "completed_at": null,
+        "notes": null
+      },
+      {
+        "item": "prove_roi",
+        "completed": false,
+        "completed_at": null,
+        "notes": null
+      }
     ],
     "status": "active",
     "notes": null,
     "created_at": "2025-12-08T12:00:00.000000",
-    "updated_at": "2025-12-08T12:00:00.000000"
+    "updated_at": "2025-12-08T15:24:06.224994",
+    "vertical": "build"
   },
   {
     "id": "2",
     "name": "RyCon",
     "checklist": [
-      {"item": "initial_meeting", "completed": false, "completed_at": null, "notes": null},
-      {"item": "nda", "completed": false, "completed_at": null, "notes": null},
-      {"item": "data_intake_proposal", "completed": false, "completed_at": null, "notes": null},
-      {"item": "pitch_deck", "completed": false, "completed_at": null, "notes": null},
-      {"item": "closing_meeting", "completed": false, "completed_at": null, "notes": null},
-      {"item": "budget", "completed": false, "completed_at": null, "notes": null},
-      {"item": "authority", "completed": false, "completed_at": null, "notes": null},
-      {"item": "need", "completed": false, "completed_at": null, "notes": null},
-      {"item": "timeline", "completed": false, "completed_at": null, "notes": null},
-      {"item": "prove_roi", "completed": false, "completed_at": null, "notes": null}
+      {
+        "item": "initial_meeting",
+        "completed": true,
+        "completed_at": "2025-12-08T14:02:02.714449",
+        "notes": null
+      },
+      {
+        "item": "nda",
+        "completed": true,
+        "completed_at": "2025-12-08T14:02:03.304316",
+        "notes": null
+      },
+      {
+        "item": "data_intake_proposal",
+        "completed": false,
+        "completed_at": null,
+        "notes": null
+      },
+      {
+        "item": "pitch_deck",
+        "completed": false,
+        "completed_at": null,
+        "notes": null
+      },
+      {
+        "item": "closing_meeting",
+        "completed": false,
+        "completed_at": null,
+        "notes": null
+      },
+      {
+        "item": "budget",
+        "completed": false,
+        "completed_at": null,
+        "notes": null
+      },
+      {
+        "item": "authority",
+        "completed": false,
+        "completed_at": null,
+        "notes": null
+      },
+      {
+        "item": "need",
+        "completed": false,
+        "completed_at": null,
+        "notes": null
+      },
+      {
+        "item": "timeline",
+        "completed": false,
+        "completed_at": null,
+        "notes": null
+      },
+      {
+        "item": "prove_roi",
+        "completed": false,
+        "completed_at": null,
+        "notes": null
+      }
     ],
     "status": "active",
     "notes": null,
     "created_at": "2025-12-08T12:00:00.000000",
-    "updated_at": "2025-12-08T12:00:00.000000"
+    "updated_at": "2025-12-08T14:03:49.831127",
+    "vertical": "build"
   },
   {
     "id": "3",
     "name": "Wistar",
     "checklist": [
-      {"item": "initial_meeting", "completed": false, "completed_at": null, "notes": null},
-      {"item": "nda", "completed": false, "completed_at": null, "notes": null},
-      {"item": "data_intake_proposal", "completed": false, "completed_at": null, "notes": null},
-      {"item": "pitch_deck", "completed": false, "completed_at": null, "notes": null},
-      {"item": "closing_meeting", "completed": false, "completed_at": null, "notes": null},
-      {"item": "budget", "completed": false, "completed_at": null, "notes": null},
-      {"item": "authority", "completed": false, "completed_at": null, "notes": null},
-      {"item": "need", "completed": false, "completed_at": null, "notes": null},
-      {"item": "timeline", "completed": false, "completed_at": null, "notes": null},
-      {"item": "prove_roi", "completed": false, "completed_at": null, "notes": null}
+      {
+        "item": "initial_meeting",
+        "completed": false,
+        "completed_at": null,
+        "notes": null
+      },
+      {
+        "item": "nda",
+        "completed": false,
+        "completed_at": null,
+        "notes": null
+      },
+      {
+        "item": "data_intake_proposal",
+        "completed": false,
+        "completed_at": null,
+        "notes": null
+      },
+      {
+        "item": "pitch_deck",
+        "completed": false,
+        "completed_at": null,
+        "notes": null
+      },
+      {
+        "item": "closing_meeting",
+        "completed": false,
+        "completed_at": null,
+        "notes": null
+      },
+      {
+        "item": "budget",
+        "completed": false,
+        "completed_at": null,
+        "notes": null
+      },
+      {
+        "item": "authority",
+        "completed": false,
+        "completed_at": null,
+        "notes": null
+      },
+      {
+        "item": "need",
+        "completed": false,
+        "completed_at": null,
+        "notes": null
+      },
+      {
+        "item": "timeline",
+        "completed": false,
+        "completed_at": null,
+        "notes": null
+      },
+      {
+        "item": "prove_roi",
+        "completed": false,
+        "completed_at": null,
+        "notes": null
+      }
     ],
     "status": "active",
     "notes": null,
     "created_at": "2025-12-08T12:00:00.000000",
-    "updated_at": "2025-12-08T12:00:00.000000"
+    "updated_at": "2025-12-08T14:03:56.287235",
+    "vertical": "life"
   },
   {
     "id": "4",
     "name": "Mayo Ventures",
     "checklist": [
-      {"item": "initial_meeting", "completed": false, "completed_at": null, "notes": null},
-      {"item": "nda", "completed": false, "completed_at": null, "notes": null},
-      {"item": "data_intake_proposal", "completed": false, "completed_at": null, "notes": null},
-      {"item": "pitch_deck", "completed": false, "completed_at": null, "notes": null},
-      {"item": "closing_meeting", "completed": false, "completed_at": null, "notes": null},
-      {"item": "budget", "completed": false, "completed_at": null, "notes": null},
-      {"item": "authority", "completed": false, "completed_at": null, "notes": null},
-      {"item": "need", "completed": false, "completed_at": null, "notes": null},
-      {"item": "timeline", "completed": false, "completed_at": null, "notes": null},
-      {"item": "prove_roi", "completed": false, "completed_at": null, "notes": null}
+      {
+        "item": "initial_meeting",
+        "completed": false,
+        "completed_at": null,
+        "notes": null
+      },
+      {
+        "item": "nda",
+        "completed": false,
+        "completed_at": null,
+        "notes": null
+      },
+      {
+        "item": "data_intake_proposal",
+        "completed": false,
+        "completed_at": null,
+        "notes": null
+      },
+      {
+        "item": "pitch_deck",
+        "completed": false,
+        "completed_at": null,
+        "notes": null
+      },
+      {
+        "item": "closing_meeting",
+        "completed": false,
+        "completed_at": null,
+        "notes": null
+      },
+      {
+        "item": "budget",
+        "completed": false,
+        "completed_at": null,
+        "notes": null
+      },
+      {
+        "item": "authority",
+        "completed": false,
+        "completed_at": null,
+        "notes": null
+      },
+      {
+        "item": "need",
+        "completed": false,
+        "completed_at": null,
+        "notes": null
+      },
+      {
+        "item": "timeline",
+        "completed": false,
+        "completed_at": null,
+        "notes": null
+      },
+      {
+        "item": "prove_roi",
+        "completed": false,
+        "completed_at": null,
+        "notes": null
+      }
     ],
     "status": "active",
     "notes": null,
     "created_at": "2025-12-08T12:00:00.000000",
-    "updated_at": "2025-12-08T12:00:00.000000"
+    "updated_at": "2025-12-08T14:04:01.886860",
+    "vertical": "life"
   }
 ]

@@ -1,58 +1,40 @@
-import json
-import os
+"""
+Storage module for GB Finance - works with both local files and S3.
+"""
+
+import sys
 from datetime import date, datetime
 from pathlib import Path
 from typing import Optional
 import uuid
 
-# Data directories
-DATA_DIR = Path(__file__).parent.parent.parent / "data"
-TRANSACTIONS_DIR = DATA_DIR / "transactions"
-BUDGETS_DIR = DATA_DIR / "budgets"
-ACCOUNTS_DIR = DATA_DIR / "accounts"
+# Add shared module to path
+sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent / "shared"))
+from storage import get_storage
 
-
-def ensure_dirs():
-    """Create data directories if they don't exist."""
-    TRANSACTIONS_DIR.mkdir(parents=True, exist_ok=True)
-    BUDGETS_DIR.mkdir(parents=True, exist_ok=True)
-    ACCOUNTS_DIR.mkdir(parents=True, exist_ok=True)
-
-
-def date_to_filename(d: date) -> str:
-    """Convert date to filename format."""
-    return d.strftime("%Y-%m-%d") + ".json"
-
-
-def month_to_filename(month: str) -> str:
-    """Convert month string to filename format."""
-    return month + ".json"
+# Initialize storage
+_storage = get_storage("finance", str(Path(__file__).parent.parent.parent / "data"))
 
 
 # ============ TRANSACTIONS ============
 
 def get_transactions_for_date(d: date) -> list[dict]:
     """Get all transactions for a specific date."""
-    ensure_dirs()
-    filepath = TRANSACTIONS_DIR / date_to_filename(d)
-    if not filepath.exists():
-        return []
-    with open(filepath, "r") as f:
-        return json.load(f)
+    key = f"transactions/{d.isoformat()}.json"
+    return _storage.read_json(key) or []
 
 
 def get_all_transactions(limit: int = 100) -> list[dict]:
     """Get recent transactions across all dates."""
-    ensure_dirs()
-    all_transactions = []
-    files = sorted(TRANSACTIONS_DIR.glob("*.json"), reverse=True)
+    keys = _storage.list_keys("transactions/", ".json")
+    keys = sorted(keys, reverse=True)
 
-    for filepath in files:
+    all_transactions = []
+    for key in keys:
         if len(all_transactions) >= limit:
             break
-        with open(filepath, "r") as f:
-            transactions = json.load(f)
-            all_transactions.extend(transactions)
+        transactions = _storage.read_json(key) or []
+        all_transactions.extend(transactions)
 
     # Sort by date descending, then by created_at descending
     all_transactions.sort(key=lambda x: (x.get("date", ""), x.get("created_at", "")), reverse=True)
@@ -61,94 +43,74 @@ def get_all_transactions(limit: int = 100) -> list[dict]:
 
 def save_transaction(transaction: dict) -> dict:
     """Save a new transaction."""
-    ensure_dirs()
-
-    # Generate ID if not present
     if not transaction.get("id"):
         transaction["id"] = str(uuid.uuid4())[:8]
 
-    # Add timestamps
     now = datetime.now().isoformat()
     transaction["created_at"] = now
     transaction["updated_at"] = now
 
-    # Get the date and load existing transactions
     trans_date = transaction["date"]
     if isinstance(trans_date, date):
         trans_date = trans_date.isoformat()
     transaction["date"] = trans_date
 
-    filepath = TRANSACTIONS_DIR / (trans_date + ".json")
-
-    existing = []
-    if filepath.exists():
-        with open(filepath, "r") as f:
-            existing = json.load(f)
-
+    key = f"transactions/{trans_date}.json"
+    existing = _storage.read_json(key) or []
     existing.append(transaction)
-
-    with open(filepath, "w") as f:
-        json.dump(existing, f, indent=2)
+    _storage.write_json(key, existing)
 
     return transaction
 
 
 def get_transaction(transaction_id: str) -> Optional[dict]:
     """Get a specific transaction by ID."""
-    ensure_dirs()
-    for filepath in TRANSACTIONS_DIR.glob("*.json"):
-        with open(filepath, "r") as f:
-            transactions = json.load(f)
-            for t in transactions:
-                if t.get("id") == transaction_id:
-                    return t
+    keys = _storage.list_keys("transactions/", ".json")
+    for key in keys:
+        transactions = _storage.read_json(key) or []
+        for t in transactions:
+            if t.get("id") == transaction_id:
+                return t
     return None
 
 
 def update_transaction(transaction_id: str, updates: dict) -> Optional[dict]:
     """Update an existing transaction."""
-    ensure_dirs()
+    keys = _storage.list_keys("transactions/", ".json")
 
-    for filepath in TRANSACTIONS_DIR.glob("*.json"):
-        with open(filepath, "r") as f:
-            transactions = json.load(f)
+    for key in keys:
+        transactions = _storage.read_json(key) or []
 
         for i, t in enumerate(transactions):
             if t.get("id") == transaction_id:
                 # Apply updates
-                for key, value in updates.items():
+                for k, value in updates.items():
                     if value is not None:
                         if isinstance(value, date):
                             value = value.isoformat()
-                        t[key] = value
+                        t[k] = value
                 t["updated_at"] = datetime.now().isoformat()
                 transactions[i] = t
 
                 # Check if date changed - need to move to different file
                 new_date = t.get("date")
-                old_date = filepath.stem
+                old_date = key.split("/")[-1].replace(".json", "")
 
                 if new_date != old_date:
                     # Remove from old file
                     transactions.pop(i)
                     if transactions:
-                        with open(filepath, "w") as f:
-                            json.dump(transactions, f, indent=2)
+                        _storage.write_json(key, transactions)
                     else:
-                        filepath.unlink()
+                        _storage.delete(key)
 
                     # Add to new file
-                    new_filepath = TRANSACTIONS_DIR / (new_date + ".json")
-                    new_transactions = []
-                    if new_filepath.exists():
-                        with open(new_filepath, "r") as f:
-                            new_transactions = json.load(f)
+                    new_key = f"transactions/{new_date}.json"
+                    new_transactions = _storage.read_json(new_key) or []
                     new_transactions.append(t)
-                    with open(new_filepath, "w") as f:
-                        json.dump(new_transactions, f, indent=2)
+                    _storage.write_json(new_key, new_transactions)
                 else:
-                    with open(filepath, "w") as f:
-                        json.dump(transactions, f, indent=2)
+                    _storage.write_json(key, transactions)
 
                 return t
 
@@ -157,20 +119,18 @@ def update_transaction(transaction_id: str, updates: dict) -> Optional[dict]:
 
 def delete_transaction(transaction_id: str) -> bool:
     """Delete a transaction by ID."""
-    ensure_dirs()
+    keys = _storage.list_keys("transactions/", ".json")
 
-    for filepath in TRANSACTIONS_DIR.glob("*.json"):
-        with open(filepath, "r") as f:
-            transactions = json.load(f)
+    for key in keys:
+        transactions = _storage.read_json(key) or []
 
         for i, t in enumerate(transactions):
             if t.get("id") == transaction_id:
                 transactions.pop(i)
                 if transactions:
-                    with open(filepath, "w") as f:
-                        json.dump(transactions, f, indent=2)
+                    _storage.write_json(key, transactions)
                 else:
-                    filepath.unlink()
+                    _storage.delete(key)
                 return True
 
     return False
@@ -180,34 +140,29 @@ def delete_transaction(transaction_id: str) -> bool:
 
 def get_budget(month: str) -> Optional[dict]:
     """Get budget for a specific month."""
-    ensure_dirs()
-    filepath = BUDGETS_DIR / month_to_filename(month)
-    if not filepath.exists():
-        return None
-    with open(filepath, "r") as f:
-        return json.load(f)
+    key = f"budgets/{month}.json"
+    return _storage.read_json(key)
 
 
 def save_budget(budget: dict) -> dict:
     """Save or update a budget."""
-    ensure_dirs()
     month = budget["month"]
     budget["updated_at"] = datetime.now().isoformat()
-
-    filepath = BUDGETS_DIR / month_to_filename(month)
-    with open(filepath, "w") as f:
-        json.dump(budget, f, indent=2)
-
+    key = f"budgets/{month}.json"
+    _storage.write_json(key, budget)
     return budget
 
 
 def get_all_budgets() -> list[dict]:
     """Get all budgets."""
-    ensure_dirs()
+    keys = _storage.list_keys("budgets/", ".json")
+    keys = sorted(keys, reverse=True)
+
     budgets = []
-    for filepath in sorted(BUDGETS_DIR.glob("*.json"), reverse=True):
-        with open(filepath, "r") as f:
-            budgets.append(json.load(f))
+    for key in keys:
+        data = _storage.read_json(key)
+        if data:
+            budgets.append(data)
     return budgets
 
 
@@ -215,18 +170,11 @@ def get_all_budgets() -> list[dict]:
 
 def get_all_accounts() -> list[dict]:
     """Get all accounts."""
-    ensure_dirs()
-    filepath = ACCOUNTS_DIR / "accounts.json"
-    if not filepath.exists():
-        return []
-    with open(filepath, "r") as f:
-        return json.load(f)
+    return _storage.read_json("accounts/accounts.json") or []
 
 
 def save_account(account: dict) -> dict:
     """Save a new account."""
-    ensure_dirs()
-
     if not account.get("id"):
         account["id"] = str(uuid.uuid4())[:8]
 
@@ -236,17 +184,13 @@ def save_account(account: dict) -> dict:
 
     accounts = get_all_accounts()
     accounts.append(account)
-
-    filepath = ACCOUNTS_DIR / "accounts.json"
-    with open(filepath, "w") as f:
-        json.dump(accounts, f, indent=2)
+    _storage.write_json("accounts/accounts.json", accounts)
 
     return account
 
 
 def update_account(account_id: str, updates: dict) -> Optional[dict]:
     """Update an account."""
-    ensure_dirs()
     accounts = get_all_accounts()
 
     for i, a in enumerate(accounts):
@@ -256,11 +200,7 @@ def update_account(account_id: str, updates: dict) -> Optional[dict]:
                     a[key] = value
             a["updated_at"] = datetime.now().isoformat()
             accounts[i] = a
-
-            filepath = ACCOUNTS_DIR / "accounts.json"
-            with open(filepath, "w") as f:
-                json.dump(accounts, f, indent=2)
-
+            _storage.write_json("accounts/accounts.json", accounts)
             return a
 
     return None
@@ -268,15 +208,12 @@ def update_account(account_id: str, updates: dict) -> Optional[dict]:
 
 def delete_account(account_id: str) -> bool:
     """Delete an account."""
-    ensure_dirs()
     accounts = get_all_accounts()
 
     for i, a in enumerate(accounts):
         if a.get("id") == account_id:
             accounts.pop(i)
-            filepath = ACCOUNTS_DIR / "accounts.json"
-            with open(filepath, "w") as f:
-                json.dump(accounts, f, indent=2)
+            _storage.write_json("accounts/accounts.json", accounts)
             return True
 
     return False
@@ -286,13 +223,16 @@ def delete_account(account_id: str) -> bool:
 
 def get_transactions_for_month(month: str) -> list[dict]:
     """Get all transactions for a specific month."""
-    ensure_dirs()
+    # Month format: YYYY-MM
+    keys = _storage.list_keys("transactions/", ".json")
     all_transactions = []
 
-    # Month format: YYYY-MM
-    for filepath in TRANSACTIONS_DIR.glob(f"{month}-*.json"):
-        with open(filepath, "r") as f:
-            all_transactions.extend(json.load(f))
+    for key in keys:
+        # Key format: transactions/2025-12-14.json
+        filename = key.split("/")[-1].replace(".json", "")
+        if filename.startswith(month):
+            transactions = _storage.read_json(key) or []
+            all_transactions.extend(transactions)
 
     return all_transactions
 

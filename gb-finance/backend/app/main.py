@@ -1,7 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from datetime import date
-
 from .models import Transaction, TransactionUpdate, Budget, Account
 from . import storage
 
@@ -185,3 +184,4 @@ def get_income_categories():
 def health_check():
     """Health check endpoint."""
     return {"status": "healthy", "service": "gb-finance"}
+

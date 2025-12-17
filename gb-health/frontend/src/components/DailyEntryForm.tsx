@@ -8,14 +8,12 @@ const getDefaultEntry = (date: string): DailyEntry => ({
   blood_pressure_systolic: undefined,
   blood_pressure_diastolic: undefined,
   glucose: undefined,
-  steps: undefined,
   sleep_hours: undefined,
   water_glasses: 0,
   alcohol: false,
   alcohol_drinks: undefined,
   exercise: '',
   supplements: [],
-  stress_level: 5,
   notes: '',
   daily_exercises: [],
   coffee: false,
@@ -175,15 +173,6 @@ export default function DailyEntryForm() {
 
         <div className="row">
           <div className="form-group">
-            <label>Steps</label>
-            <input
-              type="number"
-              placeholder="5000"
-              value={entry.steps || ''}
-              onChange={e => handleChange('steps', e.target.value ? parseInt(e.target.value) : undefined)}
-            />
-          </div>
-          <div className="form-group">
             <label>Sleep (hours)</label>
             <input
               type="number"
@@ -212,17 +201,6 @@ export default function DailyEntryForm() {
           </div>
         </div>
 
-        <div className="form-group">
-          <label>Stress Level: {entry.stress_level}</label>
-          <input
-            type="range"
-            min="1"
-            max="10"
-            value={entry.stress_level || 5}
-            onChange={e => handleChange('stress_level', parseInt(e.target.value))}
-            aria-label="Stress level slider"
-          />
-        </div>
 
         <div className="form-group">
           <label>Alcohol?</label>
@@ -300,20 +278,6 @@ export default function DailyEntryForm() {
               </button>
             ))}
           </div>
-        </div>
-
-        <div className="form-group">
-          <label>Food Log</label>
-          <VoiceInput
-            placeholder="Tap mic to dictate food"
-            onResult={(text) => handleChange('food_log', (entry.food_log ? entry.food_log + ' ' : '') + text)}
-          />
-          <textarea
-            rows={3}
-            placeholder="What did you eat today? (e.g., 1/2 egg sandwich with avocado, tomato)"
-            value={entry.food_log || ''}
-            onChange={e => handleChange('food_log', e.target.value)}
-          />
         </div>
 
         <div className="form-group">

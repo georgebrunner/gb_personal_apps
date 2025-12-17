@@ -1,5 +1,7 @@
-// Use dynamic API base for accessing from different devices
-const API_BASE = `http://${window.location.hostname}:8004`
+// API base URL - uses /api/food in production, port 8004 in development
+const API_BASE = import.meta.env.PROD
+  ? '/api/food'
+  : `http://${window.location.hostname}:8004`
 
 export type MealType = 'breakfast' | 'lunch' | 'dinner' | 'snack'
 

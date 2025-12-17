@@ -1,0 +1,74 @@
+[
+  {
+    "id": "02089bdc-7ef4-4338-96f4-f63c230b4820",
+    "name": "Coffee",
+    "default_meal_type": "breakfast",
+    "calories": 25,
+    "protein_g": null,
+    "carbs_g": null,
+    "fat_g": null,
+    "use_count": 5,
+    "created_at": "2025-12-08T11:45:09.260139",
+    "updated_at": "2025-12-11T09:58:24.614519"
+  },
+  {
+    "id": "0771cae1-4deb-48fd-9a1f-35a8b012d8aa",
+    "name": "Oatmeal",
+    "default_meal_type": "breakfast",
+    "calories": 230,
+    "protein_g": null,
+    "carbs_g": null,
+    "fat_g": null,
+    "use_count": 3,
+    "created_at": "2025-12-08T11:46:36.348004",
+    "updated_at": "2025-12-11T07:27:19.517845"
+  },
+  {
+    "id": "e001a8f8-8055-4c7b-ad96-ee758c1b98f7",
+    "name": "Garden Salad",
+    "default_meal_type": "lunch",
+    "calories": 200,
+    "protein_g": null,
+    "carbs_g": null,
+    "fat_g": null,
+    "use_count": 1,
+    "created_at": "2025-12-08T14:36:07.418024",
+    "updated_at": "2025-12-08T14:36:18.568310"
+  },
+  {
+    "id": "6a720ed3-a952-412c-87db-666eedcb06ba",
+    "name": "Garden Salad with Tuna salad (5 oz)",
+    "default_meal_type": "lunch",
+    "calories": 225,
+    "protein_g": null,
+    "carbs_g": null,
+    "fat_g": null,
+    "use_count": 1,
+    "created_at": "2025-12-09T13:20:35.945508",
+    "updated_at": "2025-12-09T13:20:42.230793"
+  },
+  {
+    "id": "6281b352-79e0-4d65-862b-25f94847b348",
+    "name": "Omelette - Broccoli and Chedddar",
+    "default_meal_type": "breakfast",
+    "calories": 250,
+    "protein_g": null,
+    "carbs_g": null,
+    "fat_g": null,
+    "use_count": 1,
+    "created_at": "2025-12-09T22:24:52.162423",
+    "updated_at": "2025-12-09T22:24:59.437829"
+  },
+  {
+    "id": "175f8651-cec1-40fc-9fab-db4408439cb0",
+    "name": "Nuts and Frosted mini-wheats",
+    "default_meal_type": "snack",
+    "calories": 100,
+    "protein_g": null,
+    "carbs_g": null,
+    "fat_g": null,
+    "use_count": 1,
+    "created_at": "2025-12-11T07:29:13.562184",
+    "updated_at": "2025-12-11T07:29:20.693451"
+  }
+]

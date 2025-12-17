@@ -11,16 +11,18 @@ class Vertical(str, Enum):
 
 
 class ChecklistItem(str, Enum):
-    INITIAL_MEETING = "initial_meeting"
-    NDA = "nda"
-    DATA_INTAKE_PROPOSAL = "data_intake_proposal"
-    PITCH_DECK = "pitch_deck"
-    CLOSING_MEETING = "closing_meeting"
     # BANT
     BUDGET = "budget"
     AUTHORITY = "authority"
     NEED = "need"
     TIMELINE = "timeline"
+    # Sales Process
+    INITIAL_MEETING = "initial_meeting"
+    NDA = "nda"
+    DATA_INTAKE = "data_intake"
+    PROPOSAL = "proposal"
+    PITCH_DECK = "pitch_deck"
+    CLOSING_MEETING = "closing_meeting"
     # ROI
     PROVE_ROI = "prove_roi"
 
