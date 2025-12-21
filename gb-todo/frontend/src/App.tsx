@@ -7,6 +7,7 @@ const APP_LINKS = [
   { name: 'Guitar', port: 5174, path: '/guitar/' },
   { name: 'Todo', port: 5175, path: '/todo/' },
   { name: 'Finance', port: 5176, path: '/finance/' },
+  { name: 'Food', port: 5177, path: '/food/' },
   { name: 'Sales', port: 5178, path: '/sales/' },
 ]
 

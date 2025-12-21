@@ -7,6 +7,7 @@
 /* Cross-app navigation */
 .app-nav {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
   margin-bottom: 16px;
   padding: 8px;
@@ -15,7 +16,8 @@
 }
 
 .app-link {
-  flex: 1;
+  flex: 1 1 auto;
+  min-width: 60px;
   padding: 8px 12px;
   text-align: center;
   text-decoration: none;

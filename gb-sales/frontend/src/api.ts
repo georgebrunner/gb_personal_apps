@@ -11,6 +11,7 @@ export type ChecklistItemType =
   | 'initial_meeting'
   | 'nda'
   | 'data_intake'
+  | 'demo'
   | 'proposal'
   | 'pitch_deck'
   | 'closing_meeting'
@@ -50,6 +51,7 @@ export const CHECKLIST_LABELS: Record<ChecklistItemType, string> = {
   initial_meeting: 'Initial Meeting',
   nda: 'NDA',
   data_intake: 'Data Intake',
+  demo: 'Demo',
   proposal: 'Proposal',
   pitch_deck: 'Pitch Deck',
   closing_meeting: 'Closing Meeting',

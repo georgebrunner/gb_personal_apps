@@ -20,6 +20,7 @@ class ChecklistItem(str, Enum):
     INITIAL_MEETING = "initial_meeting"
     NDA = "nda"
     DATA_INTAKE = "data_intake"
+    DEMO = "demo"
     PROPOSAL = "proposal"
     PITCH_DECK = "pitch_deck"
     CLOSING_MEETING = "closing_meeting"
